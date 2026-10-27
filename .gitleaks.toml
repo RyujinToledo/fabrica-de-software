@@ -1,0 +1,12 @@
+title = "fabrica-de-software gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Arquivos de exemplo e documentacao permitidos"
+paths = [
+  '''^\.env\.example$''',
+  '''^package-lock\.json$''',
+  '''^pnpm-lock\.yaml$'''
+]
