@@ -12,3 +12,5 @@ Repositorio publico sob licenca MIT. Qualquer codigo aqui ficara acessivel publi
 4. **Arquitetura e Seguranca (OWASP)**:
    - Backend e o guardiao dos dados e das regras. Validacao de schemas (ex: Zod) na entrada de qualquer dado externo.
    - Frontend e vitrine, nao motor. Nenhuma regra de autorizacao ou logica critica de negocio roda exclusivamente no frontend.
+   - **Zero-Trust de Permissoes**: Na duvida, a regra padrao e `default-deny`. Toda rota e operacao exige autorizacao explicita pelo menor privilegio.
+   - **APIs com OpenAPI**: Toda API deve seguir o padrao OpenAPI 3.x documentado. Painel interativo (Swagger UI) centralizado em rota unica restrita exclusivamente ao administrador autenticado, nunca exposta publicamente.

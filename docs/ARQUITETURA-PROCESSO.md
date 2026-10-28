@@ -100,11 +100,16 @@ Agentes especializados analisam a `Demanda.md` em paralelo sob angulos distintos
 - **ADRs (Architecture Decision Records)**: Decisoes tecnicas diretas e justificadas, vinculadas aos PRDs.
   - A stack aprovada e o cardapio maximo permitido. Estar aprovada nao obriga o uso de todas as ferramentas, mas proibe qualquer ferramenta externa.
 - **Fundações Obrigatorias**:
-  1. Modelagem de dominio (entidades e regras de negocio puras).
-  2. Modelagem do banco de dados (schemas, migrations e integridade referencial no PostgreSQL).
-  3. Modelagem da API (contratos de entrada com validacao de schema Zod).
-  4. Metricas claras de performance monitoradas.
-  5. Regras rigidas de OWASP.
+  1. **Modelagem de Dominio**: Entidades e regras de negocio puras.
+  2. **Modelagem do Banco de Dados**: Schemas, migrations e integridade referencial no PostgreSQL.
+  3. **Modelagem da API com OpenAPI**:
+     - Contrato estrito no padrao **OpenAPI 3.x** derivado dos schemas de validacao Zod.
+     - Painel interativo de documentacao (Swagger UI) centralizado em uma rota unica protegida, acessivel **exclusivamente pelo administrador autenticado**, nunca exposto publicamente.
+  4. **Modelagem de Permissoes (Zero-Trust)**:
+     - Politica rigorosa de controle de acesso: na duvida, o padrao e **Zero-Trust** com negacao por padrao (`default-deny`).
+     - Principio do menor privilegio (`least privilege`) aplicado em cada endpoint, servico e operacao de banco.
+  5. **Metricas Claras de Performance Monitoradas**: Latencia, throughput e queries lentas.
+  6. **Regras Rigidas de OWASP**: Sanitizacao de inputs, protecao contra SQLi, XSS, CSRF, secrets fora do codigo e headers seguros de HTTP.
 - **Tasks**:
   - Descricao e objetivo claro.
   - O que **nao deve ser feito** (guardrails negativos).
@@ -150,15 +155,15 @@ A fabrica gerencia seu proprio estado atraves de um banco PostgreSQL interno:
 
 ## 5. Stack Aprovada da Fabrica e dos Produtos Gerados
 
-| Componente                 | Tecnologia Aprovada                                         |
-| :------------------------- | :---------------------------------------------------------- |
-| **Linguagem & Runtime**    | TypeScript, Node.js LTS                                     |
-| **Frontend**               | React, Vite, TanStack (Router/Query), Tailwind CSS          |
-| **Backend & Validacao**    | Node.js, Zod (validacao de borda)                           |
-| **Banco de Dados & Cache** | PostgreSQL, Valkey                                          |
-| **Testes**                 | Playwright (E2E prioritario), Vitest (Unitarios/Integracao) |
-| **Qualidade & Estilo**     | Biome, TypeScript strict                                    |
-| **Seguranca**              | Gitleaks, OWASP guardrails, Coraza WAF, fail2ban, NGINX     |
-| **Gerenciador de Pacotes** | pnpm                                                        |
-| **Sandbox & Execucao**     | Docker (containers descartaveis), Git Worktrees             |
-| **Provedor de LLM**        | OpenAI API (padrao exclusivo inicial)                       |
+| Componente                 | Tecnologia Aprovada                                                     |
+| :------------------------- | :---------------------------------------------------------------------- |
+| **Linguagem & Runtime**    | TypeScript, Node.js LTS                                                 |
+| **Frontend**               | React, Vite, TanStack (Router/Query), Tailwind CSS                      |
+| **Backend & Validacao**    | Node.js, Zod (validacao de borda), OpenAPI 3.x, Swagger UI (admin-only) |
+| **Banco de Dados & Cache** | PostgreSQL, Valkey                                                      |
+| **Testes**                 | Playwright (E2E prioritario), Vitest (Unitarios/Integracao)             |
+| **Qualidade & Estilo**     | Biome, TypeScript strict                                                |
+| **Seguranca**              | Gitleaks, OWASP guardrails, Coraza WAF, fail2ban, NGINX                 |
+| **Gerenciador de Pacotes** | pnpm                                                                    |
+| **Sandbox & Execucao**     | Docker (containers descartaveis), Git Worktrees                         |
+| **Provedor de LLM**        | OpenAI API (padrao exclusivo inicial)                                   |
