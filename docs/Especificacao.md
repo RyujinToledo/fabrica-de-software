@@ -105,19 +105,19 @@ A Fabrica de Software e uma ferramenta **interna** que transforma demandas em li
 
 ## 5. Pipeline de Producao (11 Fases)
 
-| Fase | Nome | Entrada | Saida | Validacao Humana |
-|:-----|:-----|:--------|:------|:-----------------|
-| 1 | Elicitacao | Conversa no chat | Demanda.md | Sim |
-| 2 | Painel de Especialistas | Demanda.md | Requisitos.md | Nao |
-| 3 | Choque de Realidade | Demanda.md + Requisitos.md | Decisoes.md | Sim |
-| 4 | Consultoria de Design | Requisitos + Decisoes | Design-System.md | Sim |
-| 5 | Consolidacao e Coerencia | Todos os docs | Especificacao.md | Nao (agente audita) |
-| 6 | Decomposicao Tecnica | Especificacao.md | PRDs/ + ADRs/ | Nao |
-| 7 | Geracao de Tasks | PRDs + ADRs | Tasks/ | Nao |
-| 8 | Execucao Concorrente | Tasks/ | Codigo + Testes | Nao |
-| 9 | Integracao e Validacao | Branches | Branch integrada | Nao |
-| 10 | Homologacao | Container preview | URL de teste | Sim |
-| 11 | Deploy | Versao aprovada | Produto em producao | Sim |
+| Fase | Nome                     | Entrada                    | Saida               | Validacao Humana    |
+| :--- | :----------------------- | :------------------------- | :------------------ | :------------------ |
+| 1    | Elicitacao               | Conversa no chat           | Demanda.md          | Sim                 |
+| 2    | Painel de Especialistas  | Demanda.md                 | Requisitos.md       | Nao                 |
+| 3    | Choque de Realidade      | Demanda.md + Requisitos.md | Decisoes.md         | Sim                 |
+| 4    | Consultoria de Design    | Requisitos + Decisoes      | Design-System.md    | Sim                 |
+| 5    | Consolidacao e Coerencia | Todos os docs              | Especificacao.md    | Nao (agente audita) |
+| 6    | Decomposicao Tecnica     | Especificacao.md           | PRDs/ + ADRs/       | Nao                 |
+| 7    | Geracao de Tasks         | PRDs + ADRs                | Tasks/              | Nao                 |
+| 8    | Execucao Concorrente     | Tasks/                     | Codigo + Testes     | Nao                 |
+| 9    | Integracao e Validacao   | Branches                   | Branch integrada    | Nao                 |
+| 10   | Homologacao              | Container preview          | URL de teste        | Sim                 |
+| 11   | Deploy                   | Versao aprovada            | Produto em producao | Sim                 |
 
 ### Paradas humanas obrigatorias (5 no total)
 
@@ -153,20 +153,20 @@ Independente do tipo de projeto gerado pela fabrica, todos devem conter:
 
 ### Paleta (Tailwind CSS): Slate & Cyan
 
-| Funcao | Classe Tailwind | Hex |
-|:-------|:----------------|:----|
-| Background | bg-slate-950 | #020617 |
-| Surface | bg-slate-900 | #0f172a |
-| Surface Elevada | bg-slate-800 | #1e293b |
-| Border | border-slate-700 | #334155 |
+| Funcao           | Classe Tailwind             | Hex               |
+| :--------------- | :-------------------------- | :---------------- |
+| Background       | bg-slate-950                | #020617           |
+| Surface          | bg-slate-900                | #0f172a           |
+| Surface Elevada  | bg-slate-800                | #1e293b           |
+| Border           | border-slate-700            | #334155           |
 | Primary / Accent | bg-cyan-500 / text-cyan-400 | #06b6d4 / #22d3ee |
-| Secondary | text-sky-400 | #38bdf8 |
-| Success | text-teal-400 | #2dd4bf |
-| Warning | text-amber-400 | #fbbf24 |
-| Error | text-rose-400 | #fb7185 |
-| Text Primary | text-slate-100 | #f1f5f9 |
-| Text Muted | text-slate-400 | #94a3b8 |
-| Text Disabled | text-slate-600 | #475569 |
+| Secondary        | text-sky-400                | #38bdf8           |
+| Success          | text-teal-400               | #2dd4bf           |
+| Warning          | text-amber-400              | #fbbf24           |
+| Error            | text-rose-400               | #fb7185           |
+| Text Primary     | text-slate-100              | #f1f5f9           |
+| Text Muted       | text-slate-400              | #94a3b8           |
+| Text Disabled    | text-slate-600              | #475569           |
 
 ### Tipografia
 
@@ -187,23 +187,23 @@ Independente do tipo de projeto gerado pela fabrica, todos devem conter:
 
 ## 8. Stack Aprovada
 
-| Componente | Tecnologia |
-|:-----------|:-----------|
-| Linguagem e Runtime | TypeScript, Node.js LTS |
-| Frontend | React, Vite, TanStack (Router/Query), Tailwind CSS |
-| Backend e Validacao | Node.js, Zod, OpenAPI 3.x, Swagger UI (admin) |
-| Autenticacao | Better Auth (sessoes, 2FA, RBAC) |
-| Banco de Dados e ORM | PostgreSQL, Drizzle ORM |
-| Cache e Filas | Valkey, BullMQ |
-| Armazenamento | S3-compatible e arquivos estaticos locais |
-| Comunicacao | Resend (email), Twilio (SMS/WhatsApp sob demanda) |
-| Telemetria | OpenTelemetry |
-| Testes | Playwright (E2E), Vitest (unitarios/integracao) |
-| Qualidade | Biome, TypeScript strict |
-| Seguranca | Gitleaks, OWASP, Coraza WAF, fail2ban, NGINX |
-| Pacotes | pnpm |
-| Sandbox | Docker (containers descartaveis), git worktrees (max 3) |
-| LLM | OpenAI API com compatibilidade OpenRouter |
+| Componente           | Tecnologia                                              |
+| :------------------- | :------------------------------------------------------ |
+| Linguagem e Runtime  | TypeScript, Node.js LTS                                 |
+| Frontend             | React, Vite, TanStack (Router/Query), Tailwind CSS      |
+| Backend e Validacao  | Node.js, Zod, OpenAPI 3.x, Swagger UI (admin)           |
+| Autenticacao         | Better Auth (sessoes, 2FA, RBAC)                        |
+| Banco de Dados e ORM | PostgreSQL, Drizzle ORM                                 |
+| Cache e Filas        | Valkey, BullMQ                                          |
+| Armazenamento        | S3-compatible e arquivos estaticos locais               |
+| Comunicacao          | Resend (email), Twilio (SMS/WhatsApp sob demanda)       |
+| Telemetria           | OpenTelemetry                                           |
+| Testes               | Playwright (E2E), Vitest (unitarios/integracao)         |
+| Qualidade            | Biome, TypeScript strict                                |
+| Seguranca            | Gitleaks, OWASP, Coraza WAF, fail2ban, NGINX            |
+| Pacotes              | pnpm                                                    |
+| Sandbox              | Docker (containers descartaveis), git worktrees (max 3) |
+| LLM                  | OpenAI API com compatibilidade OpenRouter               |
 
 ---
 

@@ -25,13 +25,13 @@
 
     <!-- BOTOES DE SELECAO DE ESTILO -->
     <div class="flex items-center gap-2 bg-black/60 p-1.5 rounded-lg border border-zinc-800">
-      <button onclick="switchStyle('cockpit')" id="tab-btn-cockpit" class="px-3.5 py-2 rounded-md font-semibold text-xs transition bg-emerald-500 text-black shadow-sm">
+      <button type="button" onclick="switchStyle('cockpit')" id="tab-btn-cockpit" class="px-3.5 py-2 rounded-md font-semibold text-xs transition bg-emerald-500 text-black shadow-sm">
         Estilo 1: Cockpit Modular (3 Colunas)
       </button>
-      <button onclick="switchStyle('terminal')" id="tab-btn-terminal" class="px-3.5 py-2 rounded-md font-semibold text-xs transition text-zinc-400 hover:text-white">
+      <button type="button" onclick="switchStyle('terminal')" id="tab-btn-terminal" class="px-3.5 py-2 rounded-md font-semibold text-xs transition text-zinc-400 hover:text-white">
         Estilo 2: Console Industrial CLI (Split Horizontal)
       </button>
-      <button onclick="switchStyle('canvas')" id="tab-btn-canvas" class="px-3.5 py-2 rounded-md font-semibold text-xs transition text-zinc-400 hover:text-white">
+      <button type="button" onclick="switchStyle('canvas')" id="tab-btn-canvas" class="px-3.5 py-2 rounded-md font-semibold text-xs transition text-zinc-400 hover:text-white">
         Estilo 3: Canvas de Observabilidade (Sidebar + Fluxo)
       </button>
     </div>
@@ -87,7 +87,7 @@
             </div>
             <div class="mt-2 pt-2 border-t border-zinc-800 flex gap-2">
               <input type="text" placeholder="Instrução..." class="w-full bg-zinc-950 border border-zinc-800 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500" />
-              <button class="px-2.5 py-1 bg-emerald-500 text-black font-bold rounded">OK</button>
+              <button type="button" class="px-2.5 py-1 bg-emerald-500 text-black font-bold rounded">OK</button>
             </div>
           </div>
         </div>
@@ -95,9 +95,9 @@
         <div class="col-span-5 bg-zinc-900/70 border border-zinc-800 rounded-lg p-3 flex flex-col">
           <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800">
             <div class="flex gap-1.5">
-              <button class="px-2.5 py-1 rounded bg-zinc-800 text-white font-semibold text-xs border border-zinc-700">Especificacao.md</button>
-              <button class="px-2.5 py-1 rounded text-zinc-400 hover:text-white text-xs">Requisitos.md</button>
-              <button class="px-2.5 py-1 rounded text-zinc-400 hover:text-white text-xs">ADRs/</button>
+              <button type="button" class="px-2.5 py-1 rounded bg-zinc-800 text-white font-semibold text-xs border border-zinc-700">Especificacao.md</button>
+              <button type="button" class="px-2.5 py-1 rounded text-zinc-400 hover:text-white text-xs">Requisitos.md</button>
+              <button type="button" class="px-2.5 py-1 rounded text-zinc-400 hover:text-white text-xs">ADRs/</button>
             </div>
             <span class="text-[10px] font-mono text-zinc-400">Biome: Limpo</span>
           </div>
@@ -110,7 +110,7 @@
           </div>
           <div class="mt-2 pt-2 border-t border-zinc-800 flex justify-between items-center">
             <span class="text-[10px] text-zinc-500 font-mono">MD5: a9f83... • UTF-8</span>
-            <button class="px-3 py-1 bg-emerald-500 text-black font-bold rounded text-xs">Aprovar Fase</button>
+            <button type="button" class="px-3 py-1 bg-emerald-500 text-black font-bold rounded text-xs">Aprovar Fase</button>
           </div>
         </div>
 
@@ -243,7 +243,7 @@
             <div class="mt-2 flex gap-2">
               <span class="text-amber-400 font-bold self-center">></span>
               <input type="text" value="fabrica approve --phase=4 --design=industrial" class="w-full bg-neutral-900 border border-neutral-700 text-amber-300 px-2 py-1 text-xs focus:outline-none" />
-              <button class="bg-amber-500 hover:bg-amber-400 text-black font-black px-3 py-1 text-xs uppercase">EXEC</button>
+              <button type="button" class="bg-amber-500 hover:bg-amber-400 text-black font-black px-3 py-1 text-xs uppercase">EXEC</button>
             </div>
           </div>
         </div>
@@ -309,10 +309,10 @@
               FS
             </div>
             <nav class="flex flex-col gap-2">
-              <button class="h-8 w-8 rounded-lg bg-cyan-500 text-slate-950 flex items-center justify-center font-bold" title="Pipeline">⎇</button>
-              <button class="h-8 w-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center" title="Artefatos">📄</button>
-              <button class="h-8 w-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center" title="Containers">🐳</button>
-              <button class="h-8 w-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center" title="Telemetria">📊</button>
+              <button type="button" class="h-8 w-8 rounded-lg bg-cyan-500 text-slate-950 flex items-center justify-center font-bold" title="Pipeline">⎇</button>
+              <button type="button" class="h-8 w-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center" title="Artefatos">📄</button>
+              <button type="button" class="h-8 w-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center" title="Containers">🐳</button>
+              <button type="button" class="h-8 w-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center" title="Telemetria">📊</button>
             </nav>
           </div>
           <div class="h-2.5 w-2.5 rounded-full bg-cyan-400 animate-pulse" title="Online"></div>
@@ -336,7 +336,7 @@
                 <span class="text-slate-400 text-[10px]">Latência RAG:</span>
                 <span class="font-mono text-teal-400 font-bold">14ms</span>
               </div>
-              <button class="px-3.5 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-bold hover:bg-cyan-400 transition">
+              <button type="button" class="px-3.5 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-bold hover:bg-cyan-400 transition">
                 Aprovar Especificação
               </button>
             </div>
@@ -462,6 +462,9 @@
         btnCanvas.className = "px-3.5 py-2 rounded-md font-semibold text-xs transition bg-cyan-500 text-slate-950 shadow-sm";
       }
     }
+
+    // Exposto no escopo global para os handlers inline onclick dos botoes de aba.
+    window.switchStyle = switchStyle;
   </script>
 </body>
 </html>
