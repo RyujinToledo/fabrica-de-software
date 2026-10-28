@@ -14,3 +14,5 @@ Repositorio publico sob licenca MIT. Qualquer codigo aqui ficara acessivel publi
    - Frontend e vitrine, nao motor. Nenhuma regra de autorizacao ou logica critica de negocio roda exclusivamente no frontend.
    - **Zero-Trust de Permissoes**: Na duvida, a regra padrao e `default-deny`. Toda rota e operacao exige autorizacao explicita pelo menor privilegio.
    - **APIs com OpenAPI**: Toda API deve seguir o padrao OpenAPI 3.x documentado. Painel interativo (Swagger UI) centralizado em rota unica restrita exclusivamente ao administrador autenticado, nunca exposta publicamente.
+5. **Idioma**: Tudo deve ser escrito em portugues do Brasil sempre (documentacao, especificacoes, PRDs, ADRs, tasks, logs de negocio e interfaces).
+6. **Consultoria de Design**: O Agente Especialista de Design deve analisar os requisitos e recomendar estilos, paleta de cores (Tailwind) e tipografia para decisao do usuario antes de fechar a `Especificacao.md` final.

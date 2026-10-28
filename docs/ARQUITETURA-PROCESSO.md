@@ -18,6 +18,7 @@ O processo e governado por uma maquina de estados deterministica. As LLMs operam
    - Execucao e validacao de codigo exclusivamente em containers Docker descartaveis.
 4. **OWASP e Seguranca por Padrao**: Validacao de entrada na borda (Zod), prevencao contra injecao, CSRF, XSS e zero vazamento de credenciais (Gitleaks).
 5. **Transparencia de Infraestrutura**: Codigo e infraestrutura sao entregues juntos como um unico produto. O usuario final nao precisa gerenciar detalhes tecnicos de infraestrutura.
+6. **Idioma Oficial**: Toda a documentacao, especificacoes, PRDs, ADRs, tasks, regras de negocio e mensagens de interface sao escritas exclusivamente em portugues do Brasil.
 
 ---
 
@@ -39,26 +40,30 @@ O processo e governado por uma maquina de estados deterministica. As LLMs operam
    (Agente Neutro sem viés)
         │
         ▼ (Cliente responde)
-4. Consolidacao e Coerencia ──────────► Especificacao.md
+4. Consultoria de Design ─────────────► Recomendacoes visuais (estilos, cores, fontes)
+   (Agente Especialista de Design)          aprovadas pelo Cliente
+        │
+        ▼
+5. Consolidacao e Coerencia ──────────► Especificacao.md (com Design incluso)
    (Agente de Coerência audita furos)
         │
         ▼
-5. Decomposicao Tecnica ──────────────► PRDs/ (Produto) + ADRs/ (Arquitetura)
+6. Decomposicao Tecnica ──────────────► PRDs/ (Produto) + ADRs/ (Arquitetura)
         │
         ▼
-6. Geracao de Tasks ──────────────────► Tasks/ (O que fazer, o que NAO fazer, DoD)
+7. Geracao de Tasks ──────────────────► Tasks/ (O que fazer, o que NAO fazer, DoD)
         │
         ▼
-7. Execucao Concorrente ──────────────► Git Worktrees + Docker descartaveis (TDD E2E)
+8. Execucao Concorrente ──────────────► Git Worktrees + Docker descartaveis (TDD E2E)
         │
         ▼
-8. Integracao e Validacao ────────────► Merge automatizado + Fallback de Agente Neutro
+9. Integracao e Validacao ────────────► Merge automatizado + Fallback de Agente Neutro
         │
         ▼
-9. Homologacao do Cliente ────────────► Preview URLs via container Docker descartavel
+10. Homologacao do Cliente ───────────► Preview URLs via container Docker descartavel
         │
         ▼ (Cliente aprova versao final)
-10. Agente Integrador e Deploy ───────► Produto no ar (NGINX + WAF Coraza + fail2ban + app)
+11. Agente Integrador e Deploy ───────► Produto no ar (NGINX + WAF Coraza + fail2ban + app)
 ```
 
 ---
@@ -89,14 +94,23 @@ Agentes especializados analisam a `Demanda.md` em paralelo sob angulos distintos
 - Ele busca furos logicos, custos ocultos, premissas irreais e contradicoes de negocio.
 - O resultado gera uma nova rodada de perguntas para o cliente decidir objetivamente por quais caminhos seguir.
 
-### Fase 4: Consolidacao e Auditoria de Coerencia
+### Fase 4: Consultoria e Decisao de Design
 
-- Apos as escolhas do cliente, e sintetizado o arquivo `Especificacao.md`.
-- Um **Agente de Coerencia** valida todo o documento. Se houver qualquer contradicao ou lacuna nao coberta, o documento e ajustado antes de avancar.
+- O **Agente Especialista de Design** analisa a demanda e o levantamento de requisitos.
+- Formula propostas estruturadas de design system adequadas ao produto:
+  - Estilos de interface (layout, densidade, bordas, espacamentos).
+  - Paleta de cores semantica (Tailwind CSS: primarias, secundarias, neutras, estados e contrastes).
+  - Tipografia (fontes para titulos, textos e interface com hierarquia clara).
+- Apresenta as recomendacoes para o usuario avaliar e decidir seu direcionamento visual favorito.
 
-### Fase 5: PRDs, ADRs e Decomposicao de Tasks
+### Fase 5: Consolidacao e Auditoria de Coerencia
 
-- **PRDs (Product Requirement Documents)**: Descrevem o comportamento esperado da feature, fluxos de usuarios e personas.
+- Com as respostas do cliente e a identidade visual decidida, e gerado o documento `Especificacao.md` final.
+- Um **Agente de Coerencia** valida todo o documento. Se houver qualquer contradicao, inconsistencia de design ou lacuna logica, o documento e ajustado antes de avancar.
+
+### Fase 6: PRDs, ADRs e Decomposicao de Tasks
+
+- **PRDs (Product Requirement Documents)**: Descrevem o comportamento esperado da feature, fluxos de usuarios, personas e as diretrizes de design aprovadas.
 - **ADRs (Architecture Decision Records)**: Decisoes tecnicas diretas e justificadas, vinculadas aos PRDs.
   - A stack aprovada e o cardapio maximo permitido. Estar aprovada nao obriga o uso de todas as ferramentas, mas proibe qualquer ferramenta externa.
 - **Fundações Obrigatorias**:
@@ -115,7 +129,7 @@ Agentes especializados analisam a `Demanda.md` em paralelo sob angulos distintos
   - O que **nao deve ser feito** (guardrails negativos).
   - Provas e requisitos necessarios para ser considerado "feito" (Definition of Done).
 
-### Fase 6: Execucao Concorrente com Git Worktrees e TDD
+### Fase 7: Execucao Concorrente com Git Worktrees e TDD
 
 - Cada task ou conjunto de tasks independentes e atribuida a uma `git worktree` com branch dedicada.
 - **TDD Rigoroso**: O agente cria primeiro o teste ponta a ponta (`Playwright`) ou de contrato/integracao (`Vitest`).
@@ -126,14 +140,14 @@ Agentes especializados analisam a `Demanda.md` em paralelo sob angulos distintos
   - `gitleaks protect --staged`
   - `vitest` / `playwright`
 
-### Fase 7: Integracao e Homologacao
+### Fase 8: Integracao e Homologacao
 
 - Conclusao de tarefas dispara o merge na branch de integracao.
 - A esteira executa a suite de testes de regressao e testes E2E.
 - **Fallback de Conflitos**: Caso surjam conflitos de merge ou de contrato entre frentes paralelas, um **Agente Neutro Integrador** e acionado para solucionar a inconsistencia.
 - URLs de homologacao sao geradas a partir de containers Docker descartaveis para o cliente validar o produto funcionando em tempo real.
 
-### Fase 8: Producao e Deploy
+### Fase 9: Producao e Deploy
 
 - Quando o usuario sinaliza que a versao esta pronta para producao, entra o **Agente Integrador de Infraestrutura**.
 - O agente formula os questionamentos necessarios sobre o destino do deploy.
