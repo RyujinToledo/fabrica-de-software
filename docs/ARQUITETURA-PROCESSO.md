@@ -96,12 +96,13 @@ Agentes especializados analisam a `Demanda.md` em paralelo sob angulos distintos
 
 ### Fase 4: Consultoria e Decisao de Design
 
-- O **Agente Especialista de Design** analisa a demanda e o levantamento de requisitos.
+- O **Agente Especialista de Design** analisa a demanda e o levantamento de requisitos com olhar apurado de design taste.
 - Formula propostas estruturadas de design system adequadas ao produto:
   - Estilos de interface (layout, densidade, bordas, espacamentos).
   - Paleta de cores semantica (Tailwind CSS: primarias, secundarias, neutras, estados e contrastes).
   - Tipografia (fontes para titulos, textos e interface com hierarquia clara).
-- Apresenta as recomendacoes para o usuario avaliar e decidir seu direcionamento visual favorito.
+- **Mocks Padronizados Obrigatorios**: O agente deve produzir dashboards/mockups interativos em HTML com alternancia em tempo real para que o usuario sinta o contraste, densidade e legibilidade antes de tomar a decisao.
+- Apresenta as recomendacoes visuais para o usuario avaliar e decidir seu direcionamento favorito.
 
 ### Fase 5: Consolidacao e Auditoria de Coerencia
 
