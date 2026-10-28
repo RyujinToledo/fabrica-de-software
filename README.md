@@ -21,7 +21,7 @@ Este repositorio adota controles automaticos de prevencao contra falhas e exposi
 
 - Node.js LTS (v22+)
 - pnpm (v11+)
-- gitleaks (`sudo apt install gitleaks` ou binario do seu sistema)
+- gitleaks (instalado pelo gerenciador de pacotes da sua distro ou binario oficial)
 
 ### Instalacao
 
