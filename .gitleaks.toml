@@ -3,6 +3,11 @@ title = "fabrica-de-software gitleaks config"
 [extend]
 useDefault = true
 
+[[rules]]
+id = "senha-em-comando-sudo"
+description = "Senha passada via echo em comando sudo (ex: echo SENHA | sudo ...)"
+regex = '''echo\s+[^\s|]+\s*\|\s*sudo'''
+
 [allowlist]
 description = "Arquivos de exemplo e documentacao permitidos"
 paths = [
