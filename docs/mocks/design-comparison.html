@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparador de Design System - Fabrica de Software</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .theme-transition {
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+  </style>
+</head>
+<body id="app-root" class="theme-transition min-h-screen bg-[#09090b] text-[#fafafa] font-sans antialiased text-xs p-3">
+
+  <!-- BARRA DE SELECAO DAS 3 OPCOES -->
+  <header class="theme-transition bg-[#18181b] border border-[#27272a] rounded-lg p-3 mb-3 flex flex-wrap items-center justify-between gap-3 shadow-md">
+    <div class="flex items-center gap-3">
+      <div class="h-3 w-3 rounded-full bg-[#10b981] animate-pulse" id="theme-status-dot"></div>
+      <div>
+        <h1 class="text-sm font-bold tracking-tight" id="theme-title">Design Cockpit: Opção 1 (Zinc & Emerald)</h1>
+        <p class="text-[11px] text-[#a1a1aa]" id="theme-subtitle">Estética moderna de engenharia, neutros profundos e destaque esmeralda</p>
+      </div>
+    </div>
+
+    <!-- SWITCHER DE OPCOES -->
+    <div class="flex items-center gap-2 bg-[#09090b] p-1 rounded-md border border-[#27272a]">
+      <button onclick="setTheme('zinc')" id="btn-zinc" class="px-3 py-1.5 rounded font-medium text-xs transition bg-[#10b981] text-black font-semibold">
+        1. Zinc & Emerald
+      </button>
+      <button onclick="setTheme('amber')" id="btn-amber" class="px-3 py-1.5 rounded font-medium text-xs text-[#a1a1aa] hover:text-white transition">
+        2. Terminal Industrial
+      </button>
+      <button onclick="setTheme('slate')" id="btn-slate" class="px-3 py-1.5 rounded font-medium text-xs text-[#a1a1aa] hover:text-white transition">
+        3. Dark Slate & Cyan
+      </button>
+    </div>
+  </header>
+
+  <!-- COCKPIT GRID PRINCIPAL -->
+  <div class="grid grid-cols-12 gap-3 h-[calc(100vh-100px)]">
+
+    <!-- COLUNA 1: FLUXO E CHAT (3 colunas) -->
+    <section class="col-span-3 flex flex-col gap-3">
+      <div class="theme-transition bg-[#18181b] border border-[#27272a] rounded-lg p-3 flex flex-col gap-2">
+        <div class="flex justify-between items-center pb-2 border-b border-[#27272a]">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-[#a1a1aa]">Esteira Determinística</span>
+          <span class="px-1.5 py-0.5 rounded text-[10px] bg-[#10b981]/20 text-[#34d399] font-mono border border-[#10b981]/40" id="badge-phase">Fase 4 / 11</span>
+        </div>
+        <div class="space-y-1.5 font-mono text-[11px]">
+          <div class="flex items-center justify-between text-[#34d399]">
+            <span>✓ 1. Demanda.md</span><span class="text-[9px]">Aprovado</span>
+          </div>
+          <div class="flex items-center justify-between text-[#34d399]">
+            <span>✓ 2. Requisitos.md (6 Especialistas)</span><span class="text-[9px]">Aprovado</span>
+          </div>
+          <div class="flex items-center justify-between text-[#34d399]">
+            <span>✓ 3. Choque de Realidade</span><span class="text-[9px]">Respondido</span>
+          </div>
+          <div class="flex items-center justify-between p-1.5 rounded border border-[#10b981] bg-[#10b981]/10 text-white font-semibold" id="active-step">
+            <span class="flex items-center gap-1.5">
+              <span class="h-1.5 w-1.5 rounded-full bg-[#10b981] animate-ping"></span>
+              4. Consultoria de Design
+            </span>
+            <span class="text-[9px] text-[#34d399]">Ativo</span>
+          </div>
+          <div class="flex items-center justify-between text-[#a1a1aa] opacity-60">
+            <span>○ 5. Especificacao.md (Coerência)</span><span class="text-[9px]">Pendente</span>
+          </div>
+          <div class="flex items-center justify-between text-[#a1a1aa] opacity-60">
+            <span>○ 6. PRDs + ADRs + Tasks</span><span class="text-[9px]">Pendente</span>
+          </div>
+          <div class="flex items-center justify-between text-[#a1a1aa] opacity-60">
+            <span>○ 7. Worktrees (Max 3) + TDD</span><span class="text-[9px]">Pendente</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-transition bg-[#18181b] border border-[#27272a] rounded-lg p-3 flex-1 flex flex-col">
+        <span class="font-bold uppercase tracking-wider text-[10px] text-[#a1a1aa] pb-2 border-b border-[#27272a] mb-2">Canal de Elicitação</span>
+        <div class="flex-1 overflow-y-auto space-y-2 text-[11px] pr-1">
+          <div class="p-2 rounded bg-[#27272a]/50 border border-[#27272a]">
+            <span class="font-semibold text-[#34d399]" id="chat-sender-1">Agente de Design:</span>
+            <p class="text-[#fafafa] mt-1">Analisei o Choque de Realidade. A fábrica é de uso interno. Aqui estão os 3 mockups para decisão visual.</p>
+          </div>
+          <div class="p-2 rounded bg-[#09090b] border border-[#27272a] text-[#a1a1aa]">
+            <span class="font-semibold text-white">João (Desenvolvedor):</span>
+            <p class="mt-1">Preciso ver os dashboards padronizados lado a lado para avaliar o contraste dos logs e da esteira.</p>
+          </div>
+        </div>
+        <div class="mt-2 pt-2 border-t border-[#27272a] flex gap-1.5">
+          <input type="text" placeholder="Digite sua instrução em português..." class="w-full bg-[#09090b] border border-[#27272a] rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-[#10b981]" id="input-chat" />
+          <button class="px-2.5 py-1 rounded bg-[#10b981] text-black font-bold text-xs" id="btn-chat-send">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLUNA 2: INSPECAO DE ARTEFATOS (5 colunas) -->
+    <section class="col-span-5 theme-transition bg-[#18181b] border border-[#27272a] rounded-lg p-3 flex flex-col">
+      <div class="flex items-center gap-1.5 border-b border-[#27272a] pb-2 mb-3">
+        <button class="px-2.5 py-1 rounded text-xs font-semibold bg-[#27272a] text-white border border-[#27272a]" id="tab-spec">Especificacao.md</button>
+        <button class="px-2.5 py-1 rounded text-xs text-[#a1a1aa] hover:text-white">Requisitos.md</button>
+        <button class="px-2.5 py-1 rounded text-xs text-[#a1a1aa] hover:text-white">Demanda.md</button>
+        <button class="px-2.5 py-1 rounded text-xs text-[#a1a1aa] hover:text-white">ADRs/</button>
+        <span class="ml-auto text-[10px] font-mono text-[#a1a1aa]">UTF-8 • Biome: OK</span>
+      </div>
+
+      <div class="flex-1 overflow-y-auto font-mono text-[11px] leading-relaxed p-3 bg-[#09090b] border border-[#27272a] rounded space-y-2" id="doc-content">
+        <p class="text-[#34d399] font-bold"># Especificação do Núcleo da Fábrica de Software</p>
+        <p class="text-[#a1a1aa]">## 1. Diretrizes Arquiteturais Estritas</p>
+        <p class="text-white">- <strong>Zero-Trust:</strong> Default-deny em todas as rotas e queries.</p>
+        <p class="text-white">- <strong>OpenAPI 3.x:</strong> Swagger administrativo restrito a admin.</p>
+        <p class="text-white">- <strong>Sandbox Docker:</strong> Máximo de 3 worktrees simultâneas.</p>
+        <p class="text-white">- <strong>TDD E2E:</strong> Vitest no loop rápido, Playwright no gate de entrega.</p>
+        <p class="text-white">- <strong>Armazenamento:</strong> S3-compatible + arquivos estáticos locais.</p>
+        <div class="p-2 rounded border border-[#10b981]/30 bg-[#10b981]/5 mt-3 text-[10px] text-[#34d399]" id="doc-alert">
+          ℹ Status de Coerência: Aguardando aprovação do Design System para fechar Especificação.
+        </div>
+      </div>
+      <div class="mt-3 flex justify-between items-center pt-2 border-t border-[#27272a]">
+        <span class="text-[10px] text-[#a1a1aa]">Commit atual: <code class="text-white">1c5d2a9</code></span>
+        <button class="px-3 py-1 rounded bg-[#10b981] text-black font-bold text-xs" id="btn-approve">Aprovar e Avançar</button>
+      </div>
+    </section>
+
+    <!-- COLUNA 3: MONITOR DE WORKTREES E TERMINAL (4 colunas) -->
+    <section class="col-span-4 flex flex-col gap-3">
+      <div class="theme-transition bg-[#18181b] border border-[#27272a] rounded-lg p-3">
+        <div class="flex justify-between items-center mb-2">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-[#a1a1aa]">Sandboxes Ativos (3/3)</span>
+          <span class="px-1.5 py-0.5 rounded text-[9px] bg-blue-500/20 text-blue-400 font-mono">Concorrência Máx</span>
+        </div>
+        <div class="space-y-1.5">
+          <div class="p-2 rounded bg-[#09090b] border border-[#27272a] flex items-center justify-between">
+            <div>
+              <div class="font-mono text-[11px] font-bold text-white flex items-center gap-1.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#10b981]"></span>
+                worktree-01: auth-better-auth
+              </div>
+              <div class="text-[10px] text-[#a1a1aa] font-mono">CPU: 12% • RAM: 184MB • Vitest: 8 pass</div>
+            </div>
+            <span class="px-1.5 py-0.5 rounded text-[9px] bg-[#10b981]/20 text-[#34d399] font-mono font-bold">VERDE</span>
+          </div>
+          <div class="p-2 rounded bg-[#09090b] border border-[#27272a] flex items-center justify-between">
+            <div>
+              <div class="font-mono text-[11px] font-bold text-white flex items-center gap-1.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                worktree-02: drizzle-schemas
+              </div>
+              <div class="text-[10px] text-[#a1a1aa] font-mono">CPU: 45% • RAM: 210MB • Compilando</div>
+            </div>
+            <span class="px-1.5 py-0.5 rounded text-[9px] bg-amber-400/20 text-amber-400 font-mono font-bold">LINT</span>
+          </div>
+          <div class="p-2 rounded bg-[#09090b] border border-[#27272a] flex items-center justify-between">
+            <div>
+              <div class="font-mono text-[11px] font-bold text-white flex items-center gap-1.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#10b981]"></span>
+                worktree-03: openapi-swagger-admin
+              </div>
+              <div class="text-[10px] text-[#a1a1aa] font-mono">CPU: 8% • RAM: 140MB • Gitleaks: OK</div>
+            </div>
+            <span class="px-1.5 py-0.5 rounded text-[9px] bg-[#10b981]/20 text-[#34d399] font-mono font-bold">VERDE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-transition bg-[#18181b] border border-[#27272a] rounded-lg p-3 flex-1 flex flex-col font-mono text-[10px]">
+        <div class="flex justify-between items-center pb-2 border-b border-[#27272a] mb-2">
+          <span class="font-bold text-[#a1a1aa] uppercase tracking-wider">Terminal da Esteira (Live)</span>
+          <div class="flex gap-1.5">
+            <span class="px-1 py-0.5 bg-[#27272a] rounded text-[9px] text-white">OpenTelemetry</span>
+            <span class="px-1 py-0.5 bg-[#27272a] rounded text-[9px] text-[#34d399]">Docker: OK</span>
+          </div>
+        </div>
+        <div class="flex-1 bg-[#09090b] border border-[#27272a] rounded p-2 overflow-y-auto space-y-1 text-[#a1a1aa]" id="terminal-logs">
+          <div><span class="text-zinc-600">[22:42:01]</span> <span class="text-blue-400">INFO</span> [runner] Sandbox Docker spawned: worktree-01</div>
+          <div><span class="text-zinc-600">[22:42:03]</span> <span class="text-[#34d399]">PASS</span> [vitest] auth.service.spec.ts (8 tests passed)</div>
+          <div><span class="text-zinc-600">[22:42:05]</span> <span class="text-blue-400">INFO</span> [gitleaks] 0 leaks found in staged files</div>
+          <div><span class="text-zinc-600">[22:42:07]</span> <span class="text-amber-400">WARN</span> [drizzle] Generating migration for table 'projects'</div>
+          <div><span class="text-zinc-600">[22:42:08]</span> <span class="text-blue-400">INFO</span> [biome] 14 files checked in 12ms. Clean.</div>
+          <div><span class="text-zinc-600">[22:42:10]</span> <span class="text-[#34d399]">READY</span> All 3 worktree gates passing. Ready for sync.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const themes = {
+      zinc: {
+        name: "Opção 1: Zinc & Emerald",
+        desc: "Estética moderna de engenharia, neutros profundos e destaque esmeralda",
+        accent: "#10b981",
+        accentText: "#34d399",
+        bg: "#09090b",
+        surface: "#18181b",
+        elevated: "#27272a",
+        border: "#27272a",
+        btnActiveText: "#000000"
+      },
+      amber: {
+        name: "Opção 2: Terminal Industrial",
+        desc: "Preto profundo, contraste âmbar quente e redução de fadiga visual",
+        accent: "#f59e0b",
+        accentText: "#fbbf24",
+        bg: "#0a0a0a",
+        surface: "#171717",
+        elevated: "#262626",
+        border: "#262626",
+        btnActiveText: "#000000"
+      },
+      slate: {
+        name: "Opção 3: Dark Slate & Cyan",
+        desc: "Azul ardósia escuro com ciano elétrico de observabilidade",
+        accent: "#06b6d4",
+        accentText: "#22d3ee",
+        bg: "#020617",
+        surface: "#0f172a",
+        elevated: "#1e293b",
+        border: "#1e293b",
+        btnActiveText: "#000000"
+      }
+    };
+
+    function setTheme(key) {
+      const t = themes[key];
+      const root = document.getElementById('app-root');
+
+      document.getElementById('theme-title').innerText = "Design Cockpit: " + t.name;
+      document.getElementById('theme-subtitle').innerText = t.desc;
+
+      root.style.backgroundColor = t.bg;
+
+      document.querySelectorAll('.bg-\\[\\#18181b\\]').forEach(el => el.style.backgroundColor = t.surface);
+      document.querySelectorAll('.bg-\\[\\#09090b\\]').forEach(el => el.style.backgroundColor = t.bg);
+      document.querySelectorAll('.border-\\[\\#27272a\\]').forEach(el => el.style.borderColor = t.border);
+
+      document.getElementById('theme-status-dot').style.backgroundColor = t.accent;
+      document.getElementById('btn-approve').style.backgroundColor = t.accent;
+      document.getElementById('btn-approve').style.color = t.btnActiveText;
+      document.getElementById('btn-chat-send').style.backgroundColor = t.accent;
+      document.getElementById('btn-chat-send').style.color = t.btnActiveText;
+
+      const activeStep = document.getElementById('active-step');
+      activeStep.style.borderColor = t.accent;
+      activeStep.style.backgroundColor = t.accent + "15";
+
+      document.getElementById('chat-sender-1').style.color = t.accentText;
+
+      ['zinc', 'amber', 'slate'].forEach(k => {
+        const btn = document.getElementById('btn-' + k);
+        if (k === key) {
+          btn.style.backgroundColor = themes[k].accent;
+          btn.style.color = themes[k].btnActiveText;
+          btn.classList.add('font-semibold');
+        } else {
+          btn.style.backgroundColor = 'transparent';
+          btn.style.color = '#a1a1aa';
+          btn.classList.remove('font-semibold');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
