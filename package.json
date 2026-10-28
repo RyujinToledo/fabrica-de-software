@@ -15,6 +15,7 @@
 		"typecheck": "tsc --noEmit",
 		"security:scan": "gitleaks detect -v",
 		"security:staged": "gitleaks protect --staged -v",
+		"security:baseline": "node --experimental-strip-types scripts/verificar-baseline-gitleaks.ts",
 		"prepare": "lefthook install"
 	},
 	"devDependencies": {

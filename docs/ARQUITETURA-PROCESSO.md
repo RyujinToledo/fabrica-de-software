@@ -139,9 +139,12 @@ Agentes especializados analisam a `Demanda.md` em paralelo sob angulos distintos
   - `pnpm biome check`
   - `pnpm tsc --noEmit`
   - `gitleaks protect --staged`
+  - `pnpm security:baseline --projeto <worktree>`
   - `vitest` / `playwright`
 
 O `gitleaks` roda sempre com a baseline versionada na raiz da fabrica (`.gitleaks.toml`), copiada sem alteracao para cada projeto gerado. A baseline estende as regras padrao e inclui a regra `senha-em-comando-sudo`, que barra senha passada via `echo` em comando `sudo`.
+
+O gate `pnpm security:baseline` fecha o ciclo em dois momentos. Sem argumentos, valida a baseline da fabrica: confere a regra, prova que ela detecta o padrao proibido e que nao acusa texto limpo. Com `--projeto <worktree>`, compara o `.gitleaks.toml` do projeto com o da fabrica por hash. Projeto sem o arquivo, ou com o arquivo alterado, reprova a task. O script vive so na fabrica e roda contra a worktree do projeto, para nao existir copia divergente da regra.
 
 ### Fase 8: Integracao e Homologacao
 

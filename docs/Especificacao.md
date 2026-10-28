@@ -77,7 +77,7 @@ A Fabrica de Software e uma ferramenta **interna** que transforma demandas em li
 - **RF-022**: Toda requisicao externa, payload e retorno de ferramenta de LLM validado via schemas Zod.
 - **RF-023**: Prompts de entrada isolados em delimitadores de dados, ferramentas do agente limitadas ao seu papel.
 - **RF-024**: Chaves da OpenAI residem no servidor central. Nenhum container descartavel ou cliente recebe chaves.
-- **RF-030**: Todo projeto gerado herda o `.gitleaks.toml` da fabrica como baseline de deteccao de segredos, sem edicao manual. A baseline estende as regras padrao do gitleaks e adiciona a regra `senha-em-comando-sudo`, que barra senha passada via `echo` em comando `sudo`. A baseline roda no hook `pre-commit` e no pipeline de CI de cada projeto.
+- **RF-030**: Todo projeto gerado herda o `.gitleaks.toml` da fabrica como baseline de deteccao de segredos, sem edicao manual. A baseline estende as regras padrao do gitleaks e adiciona a regra `senha-em-comando-sudo`, que barra senha passada via `echo` em comando `sudo`. A baseline roda no hook `pre-commit` e no pipeline de CI de cada projeto. A heranca e conferida pelo gate `pnpm security:baseline --projeto <diretorio>`, que compara o arquivo do projeto com a baseline da fabrica por hash e falha se divergir.
 
 ### 3.6 Conformidade e LGPD
 
@@ -139,7 +139,7 @@ Independente do tipo de projeto gerado pela fabrica, todos devem conter:
 3. **Modelagem da API**: Contrato OpenAPI 3.x derivado dos schemas Zod. Swagger UI em rota unica restrita ao admin.
 4. **Modelagem de permissoes**: Zero-Trust, default-deny, menor privilegio em cada endpoint e operacao.
 5. **Metricas de performance**: Latencia, throughput e queries lentas monitoradas via OpenTelemetry.
-6. **Gates de qualidade**: biome check, tsc --noEmit, gitleaks com a baseline da fabrica, testes verdes. A baseline e o `.gitleaks.toml` versionado na raiz da fabrica (regra `senha-em-comando-sudo` inclusa) e e copiada para cada projeto gerado.
+6. **Gates de qualidade**: biome check, tsc --noEmit, gitleaks com a baseline da fabrica, testes verdes. A baseline e o `.gitleaks.toml` versionado na raiz da fabrica (regra `senha-em-comando-sudo` inclusa) e e copiada para cada projeto gerado. O gate `pnpm security:baseline` valida a propria baseline; com `--projeto <diretorio>`, valida que o projeto herdou o arquivo intacto.
 7. **Gates de seguranca**: OWASP (sanitizacao de inputs, SQLi, XSS, CSRF), headers seguros, secrets fora do codigo.
 
 ---
