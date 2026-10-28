@@ -1,77 +1,109 @@
 # Design System: Interface da Fabrica de Software
 
-Recomendacoes e especificacoes visuais formuladas pelo Agente Especialista de Design para a interface web interna.
+Especificacao visual final aprovada pelo usuario. Estilo escolhido: **Canvas de Observabilidade**.
 
 ---
 
-## 1. Arquitetura de Layout: Cockpit Modular de Engenharia
+## 1. Arquitetura de Layout: Canvas de Observabilidade
 
-Layout de tela cheia dividido em tres paineis de alta densidade sem espaco desperdicado:
+Sidebar fixa a esquerda com navegacao e estado geral. Area central com flow cards que representam as fases do pipeline. Cada card mostra status, progresso e acoes disponiveis.
 
-1. **Painel Esquerdo (Fluxo e Dialogo)**:
-   - Chat interativo com a esteira e agentes.
-   - Trilha visual com a timeline das 11 fases do processo.
-   - Alertas de tarefas que aguardam decisao humana.
+### Sidebar Esquerda (fixa, ~240px)
 
-2. **Painel Central (Inspecao de Artefatos)**:
-   - Visualizacao e edicao de documentos gerados (`Demanda.md`, `Requisitos.md`, `Especificacao.md`, PRDs, ADRs e Tasks).
-   - Abas rapidas e alternancia entre visualizacao renderizada e modo diff.
+- Logotipo e nome do projeto ativo.
+- Navegacao vertical: Dashboard, Pipeline, Artefatos, Logs, Configuracoes.
+- Indicadores de status compactos: worktrees ativas (ate 3), containers rodando, alertas pendentes.
+- Botao de acao humana quando o pipeline aguarda decisao (badge pulsante).
 
-3. **Painel Direito / Inferior (Operacao e Telemetria)**:
-   - Terminal virtualizado de logs em tempo real (OpenTelemetry, Docker, Biome, Vitest, Playwright, Gitleaks).
-   - Monitoramento das ate 3 worktrees concorrentes com consumo de CPU, RAM e tempo de execucao.
+### Area Central (flow cards)
+
+- Cards de fase dispostos em fluxo vertical ou grid 2 colunas, dependendo da largura.
+- Cada card mostra: numero da fase, nome, status (pendente/em progresso/concluido/bloqueado), barra de progresso, timestamp do ultimo update.
+- Card expandido revela: agente responsavel, artefatos gerados (links clicaveis), logs resumidos, botoes de acao (aprovar, rejeitar, inspecionar).
+- Conexoes visuais entre cards indicam dependencias (linhas SVG ou bordas conectadas).
+
+### Painel Inferior (colapsavel)
+
+- Terminal de logs em tempo real (OpenTelemetry, Docker, testes).
+- Tabs: Todos, Erros, Agentes, Containers.
+- Filtro por worktree e por fase.
 
 ---
 
-## 2. Paletas de Cores Semanticas (Tailwind CSS)
+## 2. Paleta de Cores: Slate & Cyan (Tailwind CSS)
 
-### Opcao 1: Zinc & Emerald (Recomendada)
-
-- Background: `bg-zinc-950` (#09090b)
-- Surface: `bg-zinc-900` (#18181b)
-- Surface Elevada: `bg-zinc-800` (#27272a)
-- Border: `border-zinc-800` (#27272a)
-- Primary / Accent: `bg-emerald-500` / `text-emerald-400` (#10b981 / #34d399)
-- Success: `text-emerald-400` (#34d399)
-- Warning: `text-amber-400` (#fbbf24)
-- Error: `text-rose-500` (#f43f5e)
-- Text Primary: `text-zinc-50` (#fafafa)
-- Text Muted: `text-zinc-400` (#a1a1aa)
-
-### Opcao 2: Terminal Industrial
-
-- Background: `bg-neutral-950` (#0a0a0a)
-- Surface: `bg-neutral-900` (#171717)
-- Surface Elevada: `bg-neutral-850` (#1f1f1f)
-- Border: `border-neutral-800` (#262626)
-- Primary / Accent: `bg-amber-500` / `text-amber-400` (#f59e0b / #fbbf24)
-- Success: `text-emerald-500` (#10b981)
-- Warning: `text-yellow-400` (#facc15)
-- Error: `text-red-500` (#ef4444)
-- Text Primary: `text-neutral-100` (#f5f5f5)
-- Text Muted: `text-neutral-400` (#a3a3a3)
-
-### Opcao 3: Dark Slate & Cyan
+Paleta final aprovada:
 
 - Background: `bg-slate-950` (#020617)
 - Surface: `bg-slate-900` (#0f172a)
 - Surface Elevada: `bg-slate-800` (#1e293b)
-- Border: `border-slate-800` (#1e293b)
-- Primary / Accent: `bg-cyan-500` / `text-cyan-400` (#06b6d4)
+- Border: `border-slate-700` (#334155)
+- Primary / Accent: `bg-cyan-500` / `text-cyan-400` (#06b6d4 / #22d3ee)
+- Secondary: `text-sky-400` (#38bdf8)
 - Success: `text-teal-400` (#2dd4bf)
 - Warning: `text-amber-400` (#fbbf24)
 - Error: `text-rose-400` (#fb7185)
 - Text Primary: `text-slate-100` (#f1f5f9)
 - Text Muted: `text-slate-400` (#94a3b8)
+- Text Disabled: `text-slate-600` (#475569)
+
+### Regras de uso
+
+- Cyan para acoes primarias, links, e elementos interativos ativos.
+- Teal para indicadores de sucesso e fases concluidas.
+- Amber para avisos e fases que aguardam acao.
+- Rose para erros e falhas.
+- Nunca usar cores fora desta paleta sem aprovacao.
 
 ---
 
-## 3. Tipografia e Hierarquia
+## 3. Tipografia
 
-- **Interface geral (`font-sans`)**: Inter ou Geist Sans com `tabular-nums` ativo em todos os numeros, contadores e cronometros.
+- **Interface geral (`font-sans`)**: Geist Sans. `tabular-nums` obrigatorio em numeros, contadores e cronometros.
 - **Codigo, logs e hashes (`font-mono`)**: JetBrains Mono.
 - **Escala de tamanho**:
-  - `text-xs` (12px): badges de status, logs do terminal, identificadores de container e tempo.
-  - `text-sm` (14px): corpo de chat, inputs e descricoes de tarefas.
-  - `text-base` (16px): titulos de paineis e abas principais.
-  - `text-lg` (18px): status geral da esteira e identificador do projeto.
+  - `text-xs` (12px): badges de status, logs do terminal, IDs de container, timestamps.
+  - `text-sm` (14px): corpo de texto em cards, inputs, descricoes de tarefas.
+  - `text-base` (16px): titulos de cards, nomes de fases, labels de navegacao.
+  - `text-lg` (18px): titulo do projeto, status geral do pipeline.
+  - `text-xl` (20px): headings de pagina (usado com moderacao).
+
+---
+
+## 4. Componentes Padrao
+
+### Cards de Fase
+
+- Fundo: `bg-slate-900`, borda `border-slate-700`, `rounded-lg`.
+- Hover: borda muda para `border-cyan-500/50`.
+- Status badge no canto superior direito com cor semantica.
+- Padding interno: `p-4`.
+
+### Botoes
+
+- Primario: `bg-cyan-600 hover:bg-cyan-500 text-white rounded-md px-4 py-2`.
+- Secundario: `bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-md px-4 py-2`.
+- Destrutivo: `bg-rose-600 hover:bg-rose-500 text-white rounded-md px-4 py-2`.
+- Todos com `transition-colors duration-150`.
+
+### Inputs
+
+- `bg-slate-800 border-slate-700 text-slate-100 rounded-md focus:border-cyan-500 focus:ring-cyan-500/20`.
+
+### Badges de Status
+
+- Pendente: `bg-slate-700 text-slate-300`.
+- Em progresso: `bg-cyan-500/10 text-cyan-400 border border-cyan-500/30`.
+- Concluido: `bg-teal-500/10 text-teal-400 border border-teal-500/30`.
+- Bloqueado: `bg-amber-500/10 text-amber-400 border border-amber-500/30`.
+- Erro: `bg-rose-500/10 text-rose-400 border border-rose-500/30`.
+
+---
+
+## 5. Principios
+
+- Densidade alta: informacao visivel sem scroll excessivo.
+- Hierarquia por contraste: elementos ativos em cyan, inativos em slate muted.
+- Animacoes minimas: transicoes de cor e opacidade. Sem animacoes decorativas.
+- Acessibilidade: contraste minimo WCAG AA em todos os textos sobre fundos.
+- Responsividade: sidebar colapsa em telas < 768px, flow cards empilham verticalmente.
