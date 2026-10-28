@@ -174,7 +174,12 @@ A fabrica gerencia seu proprio estado atraves de um banco PostgreSQL interno:
 | **Linguagem & Runtime**    | TypeScript, Node.js LTS                                                 |
 | **Frontend**               | React, Vite, TanStack (Router/Query), Tailwind CSS                      |
 | **Backend & Validacao**    | Node.js, Zod (validacao de borda), OpenAPI 3.x, Swagger UI (admin-only) |
-| **Banco de Dados & Cache** | PostgreSQL, Valkey                                                      |
+| **Autenticacao**           | Better Auth (sessoes, 2FA, RBAC)                                        |
+| **Banco de Dados & ORM**   | PostgreSQL, Drizzle ORM (migrations em SQL puro)                        |
+| **Cache & Filas**          | Valkey, BullMQ                                                          |
+| **Armazenamento**          | S3-compatible (Cloudflare R2 / AWS S3) e arquivos estaticos locais      |
+| **Comunicacao**            | Resend (email transacional), Twilio (SMS/WhatsApp sob demanda)          |
+| **Telemetria & Metricas**  | OpenTelemetry                                                           |
 | **Testes**                 | Playwright (E2E prioritario), Vitest (Unitarios/Integracao)             |
 | **Qualidade & Estilo**     | Biome, TypeScript strict                                                |
 | **Seguranca**              | Gitleaks, OWASP guardrails, Coraza WAF, fail2ban, NGINX                 |
