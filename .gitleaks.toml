@@ -1,3 +1,6 @@
+# Baseline canonica de deteccao de segredos da fabrica de software.
+# Este arquivo e copiado sem alteracao para todo projeto gerado (RF-030).
+# Regra de projeto novo se adiciona aqui, nunca no arquivo do projeto.
 title = "fabrica-de-software gitleaks config"
 
 [extend]

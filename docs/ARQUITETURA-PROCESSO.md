@@ -141,6 +141,8 @@ Agentes especializados analisam a `Demanda.md` em paralelo sob angulos distintos
   - `gitleaks protect --staged`
   - `vitest` / `playwright`
 
+O `gitleaks` roda sempre com a baseline versionada na raiz da fabrica (`.gitleaks.toml`), copiada sem alteracao para cada projeto gerado. A baseline estende as regras padrao e inclui a regra `senha-em-comando-sudo`, que barra senha passada via `echo` em comando `sudo`.
+
 ### Fase 8: Integracao e Homologacao
 
 - Conclusao de tarefas dispara o merge na branch de integracao.
