@@ -13,8 +13,8 @@
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write .",
 		"typecheck": "tsc --noEmit",
-		"security:scan": "gitleaks detect -v",
-		"security:staged": "gitleaks protect --staged -v",
+		"security:scan": "gitleaks detect --config .gitleaks.toml --redact -v",
+		"security:staged": "gitleaks protect --staged --config .gitleaks.toml --redact -v",
 		"security:baseline": "node --experimental-strip-types scripts/verificar-baseline-gitleaks.ts",
 		"prepare": "lefthook install"
 	},

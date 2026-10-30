@@ -1,12 +1,21 @@
 pre-commit:
   parallel: false
   commands:
+    # --redact: o terminal mostra o arquivo e a regra, nunca o valor do segredo.
     gitleaks:
-      run: gitleaks protect --staged -v
+      run: gitleaks protect --staged --config .gitleaks.toml --redact -v
     biome:
       glob: "*.{js,ts,cjs,mjs,json}"
       run: pnpm biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
+
+pre-push:
+  parallel: false
+  commands:
+    # Historico inteiro: o pre-commit so olha o staged, entao commit antigo com
+    # segredo passaria batido ate chegar no remoto.
+    gitleaks-historico:
+      run: gitleaks detect --config .gitleaks.toml --redact -v
 
 commit-msg:
   commands:
