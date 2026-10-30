@@ -1,6 +1,7 @@
 # Baseline canonica de deteccao de segredos da fabrica de software.
 # Este arquivo e copiado sem alteracao para todo projeto gerado (RF-030).
 # Regra de projeto novo se adiciona aqui, nunca no arquivo do projeto.
+# Toda regra nova precisa de fixture no scripts/verificar-baseline-gitleaks.ts.
 title = "fabrica-de-software gitleaks config"
 
 [extend]
@@ -8,13 +9,68 @@ useDefault = true
 
 [[rules]]
 id = "senha-em-comando-sudo"
-description = "Senha passada via echo em comando sudo (ex: echo SENHA | sudo ...)"
-regex = '''echo\s+[^\s|]+\s*\|\s*sudo'''
+description = "Senha canalizada por echo ou printf para sudo ou su na linha de comando"
+regex = '''(?:echo|printf)\s+\S+\s*\|\s*(?:sudo|su\s)'''
+
+[[rules]]
+id = "senha-em-comando-curl"
+description = "Credencial de basic auth (usuario anexado a senha) na flag -u do curl"
+regex = '''\bcurl\s+(?:[^\n|]+\s)?(?:-u|--user)\s*[^:\s]+:\S+'''
+
+[[rules]]
+id = "senha-em-comando-mysql"
+description = "Senha colada na opcao -p de cliente MySQL ou MariaDB, sem espaco entre a opcao e o valor"
+regex = '''\b(?:mysql|mariadb)\s+(?:[^\n|]+\s)?-p\S'''
+
+[[rules]]
+id = "senha-em-comando-psql"
+description = "Senha de banco PostgreSQL em PGPASSWORD ou na string de conexao do psql"
+regex = '''PGPASSWORD\s*=\s*[^\s"']+|\bpsql\s+(?:[^\n|]+\s)?password=\S+'''
+
+[[rules]]
+id = "uri-postgresql-com-senha"
+description = "String de conexao PostgreSQL com senha embutida entre o usuario e a arroba do host"
+regex = '''(?i)(?:postgres(?:ql)?|pgsql)://[^\s:/@'"]+:[^\s@'"]+@[^\s/'"]+'''
+
+[[rules]]
+id = "chave-api-openai-openrouter"
+description = "Chave de API com prefixo sk- (OpenAI, OpenRouter, Anthropic e afins)"
+regex = '''\bsk-[A-Za-z0-9_-]{32,}'''
+
+[[rules]]
+id = "segredo-better-auth"
+description = "Segredo de sessao do Better Auth declarado com valor preenchido"
+regex = '''(?i)better[_-]?auth[_-]?secret\s*[:=]\s*["']?[^\s"']{16,}'''
+
+[[rules]]
+id = "credencial-s3"
+description = "Access key ou secret de bucket S3 compativel (AWS, MinIO e afins) com valor preenchido"
+regex = '''(?i)(?:(?:aws|s3)[_-]?(?:secret[_-]?access[_-]?key|access[_-]?key[_-]?id)|minio[_-]?root[_-]?password|minio[_-]?secret[_-]?key)\s*[:=]\s*["']?[A-Za-z0-9/+=]{16,}'''
+
+[[rules]]
+id = "credencial-twilio"
+description = "Account SID da Twilio (AC ou SK seguido de 32 hex) ou auth token declarado"
+regex = '''\b(?:AC|SK)[0-9a-f]{32}\b|(?i:twilio[_-]?auth[_-]?token)["']?\s*[:=]\s*["']?[0-9a-f]{32}'''
+
+[[rules]]
+id = "chave-api-resend"
+description = "Chave de API da Resend com prefixo re_"
+regex = '''\bre_[A-Za-z0-9_]{20,}\b'''
+
+[[rules]]
+id = "jwt-assinado"
+description = "JWT em texto, com header e payload base64url comecando em eyJ"
+regex = '''\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}'''
+
+[[rules]]
+id = "chave-privada-em-texto"
+description = "Marcador de chave privada em texto plano (BEGIN seguido de PRIVATE KEY)"
+regex = '''-----BEGIN (?:RSA |DSA |EC |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY(?: BLOCK)?-----'''
 
 [allowlist]
 description = "Arquivos de exemplo e documentacao permitidos"
 paths = [
   '''^\.env\.example$''',
   '''^package-lock\.json$''',
-  '''^pnpm-lock\.yaml$'''
+  '''^pnpm-lock\.yaml$''',
 ]
