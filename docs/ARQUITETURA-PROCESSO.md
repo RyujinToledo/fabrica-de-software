@@ -146,6 +146,8 @@ O `gitleaks` roda sempre com a baseline versionada na raiz da fabrica (`.gitleak
 
 O gate `pnpm security:baseline` fecha o ciclo em dois momentos. Sem argumentos, valida a baseline da fabrica: confere a regra, prova que ela detecta o padrao proibido e que nao acusa texto limpo. Com `--projeto <worktree>`, compara o `.gitleaks.toml` do projeto com o da fabrica por hash. Projeto sem o arquivo, ou com o arquivo alterado, reprova a task. O script vive so na fabrica e roda contra a worktree do projeto, para nao existir copia divergente da regra.
 
+Se um segredo escapar mesmo com os gates, a task para e o caso segue o procedimento da secao 6. Gate que passa nao autoriza seguir com credencial exposta.
+
 ### Fase 8: Integracao e Homologacao
 
 - Conclusao de tarefas dispara o merge na branch de integracao.
@@ -192,3 +194,19 @@ A fabrica gerencia seu proprio estado atraves de um banco PostgreSQL interno:
 | **Gerenciador de Pacotes** | pnpm                                                                    |
 | **Sandbox & Execucao**     | Docker (containers descartaveis), Git Worktrees                         |
 | **Provedor de LLM**        | OpenAI API (padrao exclusivo inicial)                                   |
+
+---
+
+## 6. Resposta a Incidente de Segredo
+
+Segredo commitado e exposicao consumada, nao erro de formatacao. Remover o commit nao desfaz a leitura: clone, fork, cache de CI e scraper podem ter copiado o valor antes da limpeza. Por isso a rotacao vem antes da reescrita do historico.
+
+Ordem obrigatoria:
+
+1. **Conter**: parar a esteira e o deploy do projeto afetado, tirar o valor do arquivo de trabalho e do ambiente compartilhado, bloquear o uso da credencial enquanto ela nao for trocada.
+2. **Rotacionar a credencial**: emitir valor novo no provedor e invalidar o antigo. Registrar data, responsavel, credencial afetada e escopo do acesso. Este passo vem antes de qualquer reescrita porque reescrever historico nao desfaz a exposicao; o valor antigo continua valido para quem ja leu.
+3. **Reescrever o historico**: remover o objeto de todas as refs e tags com `git filter-repo` ou equivalente, a partir de um clone espelho. Nunca reescrever em worktree com task em andamento.
+4. **Forcar push**: publicar o historico limpo com push forcado de branches e tags. Avisar todos os colaboradores para re-clonar. Branch local antiga reintroduz o objeto no remoto no proximo push.
+5. **Verificar o remoto**: confirmar que o objeto sumiu. Buscar o valor no historico com `git log -S`, conferir o objeto por SHA com `git cat-file` e rodar `pnpm security:scan` em um clone novo. Quando o provedor ainda servir o objeto por SHA direto, abrir chamado no suporte e pedir a coleta.
+6. **Recriar o repositorio** quando a limpeza nao der garantia: credencial de alta criticidade, objeto ainda alcancavel por SHA, forks ou clones publicos existentes, ou historico reescrito sem confirmacao do provedor. O caminho e criar repositorio novo, publicar o historico limpo, arquivar o antigo com aviso e atualizar remotes e links. Foi o caminho usado neste repositorio depois que uma senha local ficou publica em um comando no README.
+7. **Registrar e corrigir a causa**: abrir registro do incidente com a linha do tempo, sem citar o valor exposto em nenhum campo. Se a baseline nao pegou o padrao, adicionar a regra em `.gitleaks.toml` e cobrir com caso de teste no gate `pnpm security:baseline`.
