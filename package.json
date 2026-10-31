@@ -1,7 +1,7 @@
 {
 	"name": "fabrica-de-software",
 	"version": "0.1.0",
-	"description": "Fabrica de software automatizada com gates de seguranca e qualidade",
+	"description": "Fábrica de Software Autônoma: transforma ideia em produto pronto com IA, pipeline de 11 fases, TDD, Docker e deploy completo",
 	"license": "MIT",
 	"type": "module",
 	"packageManager": "pnpm@11.22.0",
@@ -41,5 +41,32 @@
 		"ioredis": "^6.0.0",
 		"postgres": "^4.0.0",
 		"zod": "^4.6.7"
+	},
+	"keywords": [
+		"fabrica-de-software",
+		"ai-agents",
+		"software-factory",
+		"tdd",
+		"playwright",
+		"vitest",
+		"typescript",
+		"nodejs",
+		"postgresql",
+		"rag",
+		"bullmq",
+		"docker",
+		"openapi",
+		"zod",
+		"better-auth",
+		"lgpd",
+		"owasp"
+	],
+	"homepage": "https://github.com/RyujinToledo/fabrica-de-software#readme",
+	"bugs": {
+		"url": "https://github.com/RyujinToledo/fabrica-de-software/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/RyujinToledo/fabrica-de-software.git"
 	}
 }
