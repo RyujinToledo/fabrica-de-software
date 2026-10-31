@@ -28,9 +28,6 @@
           },
           "401": {
             "description": "Sem autenticacao"
-          },
-          "403": {
-            "description": "Sem autorizacao"
           }
         }
       }
@@ -57,9 +54,6 @@
           },
           "401": {
             "description": "Sem autenticacao"
-          },
-          "403": {
-            "description": "Sem autorizacao"
           },
           "422": {
             "description": "Transicao bloqueada"
@@ -95,16 +89,13 @@
     },
     "/docs": {
       "get": {
-        "summary": "Swagger UI (admin)",
+        "summary": "Swagger UI (operador)",
         "responses": {
           "200": {
             "description": "Painel interativo"
           },
           "401": {
             "description": "Sem autenticacao"
-          },
-          "403": {
-            "description": "Restrito ao administrador"
           }
         }
       }

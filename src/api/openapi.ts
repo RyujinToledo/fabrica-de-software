@@ -1,7 +1,7 @@
 /**
  * Contrato OpenAPI 3.x derivado dos schemas Zod (PRD-007, RF-009).
  * Gerado sem dependencia nova: o formato espelha `src/api/validacao.ts`.
- * O Swagger UI sobe em rota unica so para admin (TASK-005 liga o auth).
+ * O Swagger UI sobe em rota unica para o operador autenticado.
  */
 
 export interface DocumentoOpenAPI {
@@ -35,7 +35,6 @@ export function gerarOpenAPI(): DocumentoOpenAPI {
 						"201": { description: "Projeto criado" },
 						"400": { description: "Payload invalido" },
 						"401": { description: "Sem autenticacao" },
-						"403": { description: "Sem autorizacao" },
 					},
 				},
 			},
@@ -54,7 +53,6 @@ export function gerarOpenAPI(): DocumentoOpenAPI {
 						"200": { description: "Fase avancada" },
 						"400": { description: "Payload invalido ou sem artefato" },
 						"401": { description: "Sem autenticacao" },
-						"403": { description: "Sem autorizacao" },
 						"422": { description: "Transicao bloqueada" },
 					},
 				},
@@ -79,11 +77,10 @@ export function gerarOpenAPI(): DocumentoOpenAPI {
 			},
 			"/docs": {
 				get: {
-					summary: "Swagger UI (admin)",
+					summary: "Swagger UI (operador)",
 					responses: {
 						"200": { description: "Painel interativo" },
 						"401": { description: "Sem autenticacao" },
-						"403": { description: "Restrito ao administrador" },
 					},
 				},
 			},

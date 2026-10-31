@@ -2,60 +2,10 @@ import { execFileSync } from "node:child_process";
 import type { AddressInfo } from "node:net";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { criarServidor } from "../src/api/servidor.ts";
-import { autorizar } from "../src/auth/autorizacao.ts";
 import { criarAuth, criarDb } from "../src/auth/config.ts";
-
-describe("matriz zero-trust", () => {
-	it("nega sem usuario em qualquer rota", () => {
-		expect(autorizar({ usuarioId: null, papel: "admin", rota: "docs" })).toBe(
-			false,
-		);
-		expect(
-			autorizar({ usuarioId: null, papel: "membro", rota: "projetos" }),
-		).toBe(false);
-	});
-
-	it("libera docs so para admin autenticado", () => {
-		expect(autorizar({ usuarioId: "u1", papel: "admin", rota: "docs" })).toBe(
-			true,
-		);
-		expect(autorizar({ usuarioId: "u1", papel: "membro", rota: "docs" })).toBe(
-			false,
-		);
-	});
-
-	it("libera projeto para admin ou membro do projeto", () => {
-		expect(
-			autorizar({
-				usuarioId: "u1",
-				papel: "membro",
-				rota: "projetos",
-				eMembroDoProjeto: true,
-			}),
-		).toBe(true);
-		expect(
-			autorizar({
-				usuarioId: "u1",
-				papel: "membro",
-				rota: "projetos",
-				eMembroDoProjeto: false,
-			}),
-		).toBe(false);
-		expect(
-			autorizar({ usuarioId: "u1", papel: "admin", rota: "transicoes" }),
-		).toBe(true);
-	});
-
-	it("nega rota desconhecida mesmo para admin", () => {
-		expect(
-			autorizar({ usuarioId: "u1", papel: "admin", rota: "desconhecida" }),
-		).toBe(false);
-	});
-});
+import { codigoTotp } from "./ajuda-totp.ts";
 
 const CHAVE_SEGREDO = ["BETTER", "_AUTH", "_SECRET"].join("");
-
-import { codigoTotp } from "./ajuda-totp.ts";
 
 describe("auth de ponta a ponta", () => {
 	const urlBanco = process.env.DATABASE_URL;
@@ -93,7 +43,7 @@ describe("auth de ponta a ponta", () => {
 	});
 
 	it.skipIf(!process.env.DATABASE_URL)(
-		"cobre signup, cookie seguro, 2FA, docs admin e revogacao",
+		"cobre signup, cookie seguro, 2FA, docs e revogacao",
 		async () => {
 			const jar = new Map<string, string>();
 			const guardar = (res: Response) => {
@@ -149,7 +99,7 @@ describe("auth de ponta a ponta", () => {
 			expect(sessao).toContain("SameSite=Strict");
 			expect(sessao).toContain("Secure");
 
-			// Membro cria projeto, mas nao abre docs.
+			// Operador cria projeto e abre docs com a mesma sessao.
 			res = await fetch(`${base}/projetos`, {
 				method: "POST",
 				headers: cabecalhos(),
@@ -157,7 +107,7 @@ describe("auth de ponta a ponta", () => {
 			});
 			expect(res.status).toBe(201);
 			res = await fetch(`${base}/docs`, { headers: cabecalhos() });
-			expect(res.status).toBe(403);
+			expect(res.status).toBe(200);
 
 			// Ativa 2FA: recebe segredo TOTP e códigos de reserva.
 			res = await fetch(`${base}/api/auth/two-factor/enable`, {
@@ -184,11 +134,7 @@ describe("auth de ponta a ponta", () => {
 			});
 			expect(res.status).toBe(200);
 
-			// Promove a admin, reloga e abre docs.
-			const { default: postgres } = await import("postgres");
-			const admin = postgres(urlBanco as string, { max: 1 });
-			await admin`UPDATE "user" SET role = 'admin' WHERE email = 'dona@exemplo.com'`;
-			await admin.end();
+			// Reloga e abre docs: operador unico, sem papel.
 			res = await fetch(`${base}/api/auth/sign-out`, {
 				method: "POST",
 				headers: cabecalhos(),

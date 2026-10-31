@@ -96,20 +96,17 @@ export function criarServidor(
 				headers: fromNodeHeaders(req.headers),
 			});
 			const usuarioId = sessao?.user?.id ?? null;
-			const papel =
-				(sessao?.user as { role?: string } | undefined)?.role === "admin"
-					? ("admin" as const)
-					: ("membro" as const);
-			if (url.pathname === "/projetos" && req.method === "GET") {
-				if (
-					!autorizar({
-						usuarioId,
-						papel,
-						rota: "projetos",
-						eMembroDoProjeto: true,
-					})
-				) {
+			const negar = (
+				rota: "projetos" | "transicoes" | "docs" | "logs" | "fases",
+			) => {
+				if (!autorizar({ usuarioId, rota })) {
 					responder(res, 401, { erro: "sem autenticacao" });
+					return true;
+				}
+				return false;
+			};
+			if (url.pathname === "/projetos" && req.method === "GET") {
+				if (negar("projetos")) {
 					return;
 				}
 				const linhas =
@@ -121,15 +118,7 @@ export function criarServidor(
 				return;
 			}
 			if (url.pathname === "/projetos" && req.method === "POST") {
-				if (
-					!autorizar({
-						usuarioId,
-						papel,
-						rota: "projetos",
-						eMembroDoProjeto: true,
-					})
-				) {
-					responder(res, 401, { erro: "sem autenticacao" });
+				if (negar("projetos")) {
 					return;
 				}
 				const corpo = await lerCorpo(req);
@@ -145,20 +134,14 @@ export function criarServidor(
 				return;
 			}
 			if (url.pathname === "/docs" && req.method === "GET") {
-				if (!usuarioId) {
-					responder(res, 401, { erro: "sem autenticacao" });
-					return;
-				}
-				if (!autorizar({ usuarioId, papel, rota: "docs" })) {
-					responder(res, 403, { erro: "restrito ao administrador" });
+				if (negar("docs")) {
 					return;
 				}
 				responder(res, 200, gerarOpenAPI());
 				return;
 			}
 			if (url.pathname === "/fases" && req.method === "GET") {
-				if (!usuarioId) {
-					responder(res, 401, { erro: "sem autenticacao" });
+				if (negar("fases")) {
 					return;
 				}
 				responder(
@@ -169,15 +152,7 @@ export function criarServidor(
 				return;
 			}
 			if (url.pathname === "/transicoes" && req.method === "POST") {
-				if (
-					!autorizar({
-						usuarioId,
-						papel,
-						rota: "transicoes",
-						eMembroDoProjeto: true,
-					})
-				) {
-					responder(res, 401, { erro: "sem autenticacao" });
+				if (negar("transicoes")) {
 					return;
 				}
 				const corpo = await lerCorpo(req);
@@ -223,8 +198,7 @@ export function criarServidor(
 				return;
 			}
 			if (url.pathname === "/logs" && req.method === "GET") {
-				if (!usuarioId) {
-					responder(res, 401, { erro: "sem autenticacao" });
+				if (negar("logs")) {
 					return;
 				}
 				const texto = (url.searchParams.get("texto") ?? "").toLowerCase();

@@ -1,6 +1,5 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin } from "better-auth/plugins/admin";
 import { twoFactor } from "better-auth/plugins/two-factor";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
@@ -48,7 +47,7 @@ export function criarAuth(
 			},
 		}),
 		emailAndPassword: { enabled: true, minPasswordLength: 12 },
-		plugins: [twoFactor(), admin()],
+		plugins: [twoFactor()],
 		session: { expiresIn: 60 * 60 * 8, updateAge: 60 * 60 },
 		advanced: {
 			cookies: {

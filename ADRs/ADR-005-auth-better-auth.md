@@ -16,5 +16,5 @@ Better Auth com sessões persistidas no PostgreSQL, 2FA e cookies `HttpOnly`, `S
 ## Consequências
 
 - Revogação e expiração controladas no banco.
-- Swagger e rotas admin só para admin autenticado.
+- Swagger e rotas sensiveis so para o operador autenticado.
 - Segredo de sessão só por variável de ambiente, coberto pela baseline de gitleaks.

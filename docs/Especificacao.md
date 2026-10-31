@@ -53,7 +53,7 @@ A Fabrica de Software e uma ferramenta **interna** que transforma demandas em li
 - **RF-007**: Esteira bloqueia qualquer pacote ou tecnologia fora da stack aprovada.
 - **RF-008**: Cada task contem descricao, escopo negativo e Definition of Done mensuravel.
 - **RF-009**: APIs seguem contrato OpenAPI 3.x derivado dos schemas Zod.
-- **RF-010**: Swagger UI em rota unica, protegido por autenticacao, acessivel somente ao administrador.
+- **RF-010**: Swagger UI em rota unica, protegido por autenticacao, acessivel somente ao operador autenticado.
 
 ### 3.3 Execucao, TDD e sandbox
 
@@ -140,7 +140,7 @@ Independente do tipo de projeto gerado pela fabrica, todos devem conter:
 
 1. **Modelagem de dominio**: Entidades e regras de negocio puras.
 2. **Modelagem do banco de dados**: Schemas, migrations e integridade referencial no PostgreSQL com Drizzle.
-3. **Modelagem da API**: Contrato OpenAPI 3.x derivado dos schemas Zod. Swagger UI em rota unica restrita ao admin.
+3. **Modelagem da API**: Contrato OpenAPI 3.x derivado dos schemas Zod. Swagger UI em rota unica restrita ao operador autenticado.
 4. **Modelagem de permissoes**: Zero-Trust, default-deny, menor privilegio em cada endpoint e operacao.
 5. **Metricas de performance**: Latencia, throughput e queries lentas monitoradas via OpenTelemetry.
 6. **Gates de qualidade**: biome check, tsc --noEmit, gitleaks com a baseline da fabrica, testes verdes. A baseline e o `.gitleaks.toml` versionado na raiz da fabrica (regra `senha-em-comando-sudo` inclusa) e e copiada para cada projeto gerado. O gate `pnpm security:baseline` valida a propria baseline; com `--projeto <diretorio>`, valida que o projeto herdou o arquivo intacto.
@@ -196,7 +196,7 @@ Independente do tipo de projeto gerado pela fabrica, todos devem conter:
 | :------------------- | :------------------------------------------------------ |
 | Linguagem e Runtime  | TypeScript, Node.js LTS                                 |
 | Frontend             | React, Vite, TanStack (Router/Query), Tailwind CSS      |
-| Backend e Validacao  | Node.js, Zod, OpenAPI 3.x, Swagger UI (admin)           |
+| Backend e Validacao  | Node.js, Zod, OpenAPI 3.x, Swagger UI (operador)        |
 | Autenticacao         | Better Auth (sessoes, 2FA, RBAC)                        |
 | Banco de Dados e ORM | PostgreSQL, Drizzle ORM                                 |
 | Cache e Filas        | Valkey, BullMQ                                          |

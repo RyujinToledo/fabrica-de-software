@@ -22,10 +22,6 @@ export const user = pgTable("user", {
 	createdAt: timestamp("createdAt").notNull().defaultNow(),
 	updatedAt: timestamp("updatedAt").notNull().defaultNow(),
 	twoFactorEnabled: boolean("twoFactorEnabled").default(false),
-	role: text("role"),
-	banned: boolean("banned").default(false),
-	banReason: text("banReason"),
-	banExpires: timestamp("banExpires"),
 });
 
 export const session = pgTable("session", {

@@ -33,7 +33,7 @@ export function gerarCompose(destino: Destino): string {
 		"  cache:",
 		"    image: valkey/valkey:8",
 		"    restart: unless-stopped",
-		"    command: [valkey-server, --requirepass, ${VALKEY_PASS}]",
+		"    command: [valkey-server, --requirepass, ${VALKEY_PASS}]", // biome-ignore lint/suspicious/noTemplateCurlyInString: interpolacao do compose, nao do JS
 		"  borda:",
 		"    image: nginx:1.27",
 		"    restart: unless-stopped",

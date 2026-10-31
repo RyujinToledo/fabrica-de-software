@@ -12,7 +12,7 @@ Nenhum segredo vaza, nenhuma rota abre sem autorização explícita e nenhum dad
 
 ## Personas
 
-- Administrador: única pessoa com acesso ao Swagger e à operação sensível.
+- Operador: usa a fabrica sozinho, com acesso ao Swagger e a operacao sensivel.
 - Usuário titular de dados: aceita termos, pede exportação ou exclusão.
 - Desenvolvedor da fábrica: recebe erro claro quando viola gate, sem ver valor de segredo.
 
@@ -22,7 +22,7 @@ Nenhum segredo vaza, nenhuma rota abre sem autorização explícita e nenhum dad
 
 1. Login via Better Auth com sessão no banco, 2FA e cookies `HttpOnly`, `SameSite=Strict`, `Secure`.
 2. Toda rota e todo objeto (`project_id`) nega por padrão. Acesso só com regra explícita de menor privilégio.
-3. Swagger UI em rota única, só para admin autenticado, nunca pública.
+3. Swagger UI em rota única, só para o operador autenticado, nunca pública.
 
 ### Validação e segredos
 
