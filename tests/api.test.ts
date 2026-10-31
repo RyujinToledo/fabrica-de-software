@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { gerarOpenAPI } from "../src/api/openapi.js";
+import { gerarOpenAPI } from "../src/api/openapi.ts";
 import {
 	AprovacaoEntrada,
 	ProjetoEntrada,
 	TransicaoEntrada,
-} from "../src/api/validacao.js";
+} from "../src/api/validacao.ts";
 
 describe("validacao de borda", () => {
 	it("aceita projeto valido", () => {

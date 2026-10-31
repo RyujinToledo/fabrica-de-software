@@ -29,9 +29,14 @@ export function criarDb(url: string) {
 	return { client, db: drizzle(client) };
 }
 
-export function criarAuth(db: ReturnType<typeof drizzle>, baseURL: string) {
+export function criarAuth(
+	db: ReturnType<typeof drizzle>,
+	baseURL: string,
+	origensConfiadas: string[] = [],
+) {
 	return betterAuth({
 		baseURL,
+		trustedOrigins: [...new Set([baseURL, ...origensConfiadas])],
 		database: drizzleAdapter(db, {
 			provider: "pg",
 			schema: {

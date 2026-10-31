@@ -80,6 +80,19 @@
         }
       }
     },
+    "/logs": {
+      "get": {
+        "summary": "Eventos do pipeline com filtro",
+        "responses": {
+          "200": {
+            "description": "Eventos filtrados"
+          },
+          "401": {
+            "description": "Sem autenticacao"
+          }
+        }
+      }
+    },
     "/docs": {
       "get": {
         "summary": "Swagger UI (admin)",

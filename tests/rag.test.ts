@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buscarRag, montarBuscaRag } from "../src/db/busca.js";
+import { buscarRag, montarBuscaRag } from "../src/db/busca.ts";
 
 describe("busca RAG", () => {
 	it("monta SQL em portugues com rank e limite", () => {

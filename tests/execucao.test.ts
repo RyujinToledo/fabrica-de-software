@@ -7,12 +7,12 @@ import {
 	montarArgsDocker,
 	rodarDescartavel,
 	temDocker,
-} from "../src/execucao/docker.js";
+} from "../src/execucao/docker.ts";
 import {
 	criarFrente,
 	limparFrente,
 	listarFrentes,
-} from "../src/execucao/worktree.js";
+} from "../src/execucao/worktree.ts";
 
 function repoTemporario(): string {
 	const dir = mkdtempSync(join(tmpdir(), "fabrica-repo-"));

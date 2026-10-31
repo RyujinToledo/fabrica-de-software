@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { healthCheck } from "../src/index.js";
+import { healthCheck } from "../src/index.ts";
 
 describe("fundacao da fabrica", () => {
 	it("expõe healthCheck com status ok", () => {

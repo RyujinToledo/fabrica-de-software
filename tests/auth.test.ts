@@ -1,9 +1,9 @@
 import { execFileSync } from "node:child_process";
 import type { AddressInfo } from "node:net";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { criarServidor } from "../src/api/servidor.js";
-import { autorizar } from "../src/auth/autorizacao.js";
-import { criarAuth, criarDb } from "../src/auth/config.js";
+import { criarServidor } from "../src/api/servidor.ts";
+import { autorizar } from "../src/auth/autorizacao.ts";
+import { criarAuth, criarDb } from "../src/auth/config.ts";
 
 describe("matriz zero-trust", () => {
 	it("nega sem usuario em qualquer rota", () => {
@@ -55,7 +55,7 @@ describe("matriz zero-trust", () => {
 
 const CHAVE_SEGREDO = ["BETTER", "_AUTH", "_SECRET"].join("");
 
-import { codigoTotp } from "./ajuda-totp.js";
+import { codigoTotp } from "./ajuda-totp.ts";
 
 describe("auth de ponta a ponta", () => {
 	const urlBanco = process.env.DATABASE_URL;
@@ -111,6 +111,7 @@ describe("auth de ponta a ponta", () => {
 			};
 			const cabecalhos = () => ({
 				"content-type": "application/json",
+				origin: base,
 				...(jar.size
 					? {
 							cookie: [...jar.entries()]
@@ -195,7 +196,7 @@ describe("auth de ponta a ponta", () => {
 			expect(res.status).toBe(200);
 			res = await fetch(`${base}/api/auth/sign-in/email`, {
 				method: "POST",
-				headers: { "content-type": "application/json" },
+				headers: { "content-type": "application/json", origin: base },
 				body: JSON.stringify({
 					email: "dona@exemplo.com",
 					password: senhaTeste,

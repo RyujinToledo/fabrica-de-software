@@ -5,15 +5,15 @@ import {
 } from "node:http";
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
 import type { Sql } from "postgres";
-import { autorizar } from "../auth/autorizacao.js";
-import type { AuthFabrica } from "../auth/config.js";
-import { avancar, FASES, type Fase } from "../orquestrador/maquina.js";
-import { gerarOpenAPI } from "./openapi.js";
+import { autorizar } from "../auth/autorizacao.ts";
+import type { AuthFabrica } from "../auth/config.ts";
+import { avancar, FASES, type Fase } from "../orquestrador/maquina.ts";
+import { gerarOpenAPI } from "./openapi.ts";
 import {
 	AprovacaoEntrada,
 	ProjetoEntrada,
 	TransicaoEntrada,
-} from "./validacao.js";
+} from "./validacao.ts";
 
 /**
  * Servidor minimo da fabrica (TASK-005, PRD-007).
@@ -42,12 +42,51 @@ async function lerCorpo(req: IncomingMessage): Promise<unknown> {
 	}
 }
 
-export function criarServidor(auth: AuthFabrica, sql: Sql) {
+export function criarServidor(
+	auth: AuthFabrica,
+	sql: Sql,
+	origensConfiadas: string[] = [],
+) {
 	const manipuladorAuth = toNodeHandler(auth);
+	const permitidas = new Set([
+		"http://127.0.0.1:4173",
+		"http://localhost:4173",
+		"http://127.0.0.1:5173",
+		"http://localhost:5173",
+		...origensConfiadas,
+	]);
 	let faseAtual: Fase = "elicitacao";
+	interface Evento {
+		momento: string;
+		nivel: "info" | "erro";
+		fase: string;
+		mensagem: string;
+	}
+	const eventos: Evento[] = [];
+	const registrar = (
+		nivel: Evento["nivel"],
+		fase: string,
+		mensagem: string,
+	) => {
+		eventos.push({ momento: new Date().toISOString(), nivel, fase, mensagem });
+		if (eventos.length > 200) {
+			eventos.splice(0, eventos.length - 200);
+		}
+	};
 	const servidor = createServer(async (req, res) => {
 		try {
 			const url = new URL(req.url ?? "/", "http://localhost");
+			const origem = req.headers.origin ?? "";
+			if (permitidas.has(origem)) {
+				res.setHeader("Access-Control-Allow-Origin", origem);
+				res.setHeader("Access-Control-Allow-Credentials", "true");
+				res.setHeader("Access-Control-Allow-Headers", "content-type");
+				res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+			}
+			if (req.method === "OPTIONS") {
+				responder(res, 204, {});
+				return;
+			}
 			if (url.pathname.startsWith("/api/auth/")) {
 				await manipuladorAuth(req, res);
 				return;
@@ -164,11 +203,37 @@ export function criarServidor(auth: AuthFabrica, sql: Sql) {
 						faseAtual = resultado.fase;
 					}
 					responder(res, 200, resultado);
+					registrar("info", valido.data.fase, resultado.motivo);
 				} catch (erro) {
+					registrar(
+						"erro",
+						valido.data.fase,
+						erro instanceof Error ? erro.message : "transicao invalida",
+					);
 					responder(res, 422, {
 						erro: erro instanceof Error ? erro.message : "transicao invalida",
 					});
 				}
+				return;
+			}
+			if (url.pathname === "/logs" && req.method === "GET") {
+				if (!usuarioId) {
+					responder(res, 401, { erro: "sem autenticacao" });
+					return;
+				}
+				const texto = (url.searchParams.get("texto") ?? "").toLowerCase();
+				const nivel = url.searchParams.get("nivel");
+				responder(
+					res,
+					200,
+					eventos.filter(
+						(e) =>
+							(!texto ||
+								e.mensagem.toLowerCase().includes(texto) ||
+								e.fase.toLowerCase().includes(texto)) &&
+							(!nivel || nivel === "todos" || e.nivel === nivel),
+					),
+				);
 				return;
 			}
 			responder(res, 404, { erro: "nao encontrado" });

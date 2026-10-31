@@ -11,7 +11,7 @@ Atualizado a cada task, junto com o commit do código. Nada de documentar só no
 | TASK-005 Better Auth com zero-trust       | feito   | atual             | matriz unitária + E2E: signup, cookie HttpOnly/Strict/Secure, TOTP verificado, docs só admin, revogação nega |
 | TASK-006 executor worktree mais Docker    | feito   | atual             | worktrees reais isoladas e limpas, flags travadas, container real some sem rastro —                          |
 | TASK-007 harness TDD com prova de falha   | feito   | —                 | —                                                                                                            |
-| TASK-008 painel Canvas base               | a fazer | —                 | —                                                                                                            |
+| TASK-008 painel Canvas base               | feito   | —                 | —                                                                                                            |
 | TASK-009 agentes elicitação até coerência | a fazer | —                 | —                                                                                                            |
 | TASK-010 preview e manifestos deploy      | a fazer | —                 | —                                                                                                            |
 | TASK-011 LGPD e PII                       | a fazer | —                 | —                                                                                                            |

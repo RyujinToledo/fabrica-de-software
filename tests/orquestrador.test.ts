@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { FilaMemoria, MAX_PARALELAS } from "../src/orquestrador/fila.js";
-import { avancar, limparTransicoes } from "../src/orquestrador/maquina.js";
+import { FilaMemoria, MAX_PARALELAS } from "../src/orquestrador/fila.ts";
+import { avancar, limparTransicoes } from "../src/orquestrador/maquina.ts";
 
 describe("maquina de estados", () => {
 	beforeEach(() => limparTransicoes());

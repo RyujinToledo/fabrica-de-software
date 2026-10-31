@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
 	exigirFalhaAntes,
 	exigirVerdeDepois,
-} from "../src/qualidade/harness.js";
+} from "../src/qualidade/harness.ts";
 
 describe("harness TDD", () => {
 	it("barra conclusao sem falha comprovada", async () => {

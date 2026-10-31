@@ -1,8 +1,9 @@
 import { execFileSync } from "node:child_process";
 import type { AddressInfo } from "node:net";
+import postgres from "postgres";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { criarServidor } from "../src/api/servidor.js";
-import { criarAuth, criarDb } from "../src/auth/config.js";
+import { criarServidor } from "../src/api/servidor.ts";
+import { criarAuth, criarDb } from "../src/auth/config.ts";
 
 const CHAVE_SEGREDO = ["BETTER", "_AUTH", "_SECRET"].join("");
 
@@ -18,11 +19,26 @@ describe("pipeline via API", () => {
 		if (!process.env[CHAVE_SEGREDO]) {
 			process.env[CHAVE_SEGREDO] = "t".repeat(40);
 		}
+		// Banco proprio para nao colidir com o teste de auth em paralelo.
+		const urlPipe = urlBanco.replace(/\/[^/?]+([?]|$)/, "/fabrica_pipe$1");
+		const manutencao = postgres(
+			urlBanco.replace(/\/[^/?]+([?]|$)/, "/postgres$1"),
+			{
+				max: 1,
+			},
+		);
+		const existentes = (await manutencao.unsafe(
+			"SELECT 1 FROM pg_database WHERE datname = 'fabrica_pipe'",
+		)) as unknown[];
+		if (existentes.length === 0) {
+			await manutencao.unsafe("CREATE DATABASE fabrica_pipe");
+		}
+		await manutencao.end();
 		execFileSync("node", ["scripts/db-migrate.js"], {
-			env: { ...process.env, DATABASE_URL: urlBanco },
+			env: { ...process.env, DATABASE_URL: urlPipe },
 			stdio: "pipe",
 		});
-		const { client, db } = criarDb(urlBanco);
+		const { client, db } = criarDb(urlPipe);
 		const auth = criarAuth(db, "http://127.0.0.1");
 		const servidor = criarServidor(auth, client);
 		await new Promise<void>((ok) => servidor.listen(0, "127.0.0.1", ok));
@@ -55,6 +71,7 @@ describe("pipeline via API", () => {
 			};
 			const h = () => ({
 				"content-type": "application/json",
+				origin: base,
 				...(jar.size
 					? {
 							cookie: [...jar.entries()]
@@ -114,6 +131,15 @@ describe("pipeline via API", () => {
 			res = await fetch(`${base}/fases`, { headers: h() });
 			const depois = (await res.json()) as { fase: string; atual: boolean }[];
 			expect(depois.find((f) => f.atual)?.fase).toBe("painel_especialistas");
+
+			res = await fetch(`${base}/logs?texto=elicitacao`, { headers: h() });
+			expect(res.status).toBe(200);
+			const eventos = (await res.json()) as {
+				fase: string;
+				mensagem: string;
+			}[];
+			expect(eventos.length).toBeGreaterThan(0);
+			expect(eventos.every((e) => e.fase === "elicitacao")).toBe(true);
 
 			res = await fetch(`${base}/transicoes`, {
 				method: "POST",
