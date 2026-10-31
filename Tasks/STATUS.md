@@ -15,7 +15,7 @@ Atualizado a cada task, junto com o commit do código. Nada de documentar só no
 | TASK-009 agentes elicitação até coerência | feito   | —                 | —                                                                                                            |
 | TASK-010 preview e manifestos deploy      | feito   | —                 | —                                                                                                            |
 | TASK-011 LGPD e PII                       | a fazer | —                 | —                                                                                                            |
-| TASK-012 observabilidade e licenças       | a fazer | —                 | —                                                                                                            |
+| TASK-012 observabilidade e licenças       | feito   | —                 | —                                                                                                            |
 
 Regra do durante:
 

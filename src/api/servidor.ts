@@ -7,6 +7,7 @@ import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
 import type { Sql } from "postgres";
 import { autorizar } from "../auth/autorizacao.ts";
 import type { AuthFabrica } from "../auth/config.ts";
+import { comSpan } from "../observabilidade/telemetria.ts";
 import { avancar, FASES, type Fase } from "../orquestrador/maquina.ts";
 import { gerarOpenAPI } from "./openapi.ts";
 import {
@@ -191,11 +192,16 @@ export function criarServidor(
 						motivo: valido.data.motivo,
 					}).success && valido.data.aprovado;
 				try {
-					const resultado = avancar(faseAtual, valido.data.chave, {
-						artefatoPresente: valido.data.artefatoPresente,
-						aprovado,
-						motivo: valido.data.motivo,
-					});
+					const resultado = await comSpan(
+						"pipeline.avancar",
+						{ fase: valido.data.fase, chave: valido.data.chave },
+						async () =>
+							avancar(faseAtual, valido.data.chave, {
+								artefatoPresente: valido.data.artefatoPresente,
+								aprovado,
+								motivo: valido.data.motivo,
+							}),
+					);
 					if (
 						typeof resultado.fase === "string" &&
 						resultado.fase !== "concluido"

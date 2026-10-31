@@ -65,6 +65,9 @@ jobs:
       - name: Audit de seguranca de dependencias
         run: pnpm audit --audit-level=high
 
+      - name: Auditoria de licencas (RNF-010)
+        run: pnpm licencas:auditar
+
       - name: Instalar gitleaks (CLI da baseline)
         env:
           GITLEAKS_VERSION: 8.28.0

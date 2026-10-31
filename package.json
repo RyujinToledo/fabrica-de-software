@@ -20,6 +20,7 @@
 		"security:scan": "gitleaks detect --config .gitleaks.toml --redact -v",
 		"security:staged": "gitleaks protect --staged --config .gitleaks.toml --redact -v",
 		"security:baseline": "node --experimental-strip-types scripts/verificar-baseline-gitleaks.ts",
+		"licencas:auditar": "node --experimental-strip-types scripts/auditoria-licencas.ts",
 		"prepare": "lefthook install"
 	},
 	"devDependencies": {
@@ -35,6 +36,7 @@
 	},
 	"dependencies": {
 		"@opentelemetry/api": "^1.10.0",
+		"@opentelemetry/sdk-trace-base": "^2.12.0",
 		"better-auth": "^1.7.14",
 		"bullmq": "^6.5.2",
 		"drizzle-orm": "^0.45.4",
