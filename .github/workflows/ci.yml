@@ -20,7 +20,7 @@ concurrency:
 jobs:
   secret-scan:
     name: Secret Scanning (Gitleaks)
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, casa]
     timeout-minutes: 10
     steps:
       - name: Checkout do codigo (historico completo)
@@ -44,7 +44,7 @@ jobs:
 
   code-quality:
     name: Lint, Typecheck & Audit
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, casa]
     timeout-minutes: 15
     steps:
       - name: Checkout do codigo
