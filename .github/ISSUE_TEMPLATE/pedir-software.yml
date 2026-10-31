@@ -1,0 +1,57 @@
+name: Pedir um software
+description: Peça um sistema em português simples, sem saber programar.
+title: "[PEDIDO] Descreva sua ideia em uma frase"
+labels: ["pedido", "elicitacao"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Você não precisa saber programar. Escreva com suas palavras, como contaria para um amigo. Quanto mais exemplo real, melhor.
+  - type: textarea
+    id: problema
+    attributes:
+      label: O que você quer resolver?
+      description: "Conte o problema do seu dia a dia. Exemplo: perco horário no salão porque cliente esquece."
+      placeholder: "Descreva o problema com suas palavras."
+    validations:
+      required: true
+  - type: textarea
+    id: usuarios
+    attributes:
+      label: Quem vai usar?
+      description: "Exemplo: eu, minha funcionária e meus clientes."
+      placeholder: "Quem usa o sistema no dia a dia?"
+    validations:
+      required: true
+  - type: textarea
+    id: precisa-fazer
+    attributes:
+      label: O que o sistema precisa fazer?
+      description: "Liste com suas palavras. Exemplo: marcar horário, mandar lembrete, ver agenda do dia."
+      placeholder: "Um item por linha, sem termo técnico."
+    validations:
+      required: true
+  - type: textarea
+    id: nao-precisa
+    attributes:
+      label: O que ele NÃO precisa fazer agora?
+      description: "Ajuda a começar simples. Exemplo: não precisa de pagamento online agora."
+      placeholder: "O que fica para depois?"
+    validations:
+      required: false
+  - type: textarea
+    id: exemplo
+    attributes:
+      label: Conte um exemplo real de uso
+      description: "Exemplo: Maria agenda corte terça 14h e recebe lembrete no dia."
+      placeholder: "Pense em uma pessoa usando, do começo ao fim."
+    validations:
+      required: true
+  - type: input
+    id: contato
+    attributes:
+      label: Como a fábrica fala com você?
+      description: "Pode ser seu usuário do GitHub ou um e-mail para retorno."
+      placeholder: "@seu-usuario ou email"
+    validations:
+      required: false
