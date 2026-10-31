@@ -7,8 +7,13 @@ import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
 import type { Sql } from "postgres";
 import { autorizar } from "../auth/autorizacao.js";
 import type { AuthFabrica } from "../auth/config.js";
+import { avancar, FASES, type Fase } from "../orquestrador/maquina.js";
 import { gerarOpenAPI } from "./openapi.js";
-import { ProjetoEntrada } from "./validacao.js";
+import {
+	AprovacaoEntrada,
+	ProjetoEntrada,
+	TransicaoEntrada,
+} from "./validacao.js";
 
 /**
  * Servidor minimo da fabrica (TASK-005, PRD-007).
@@ -39,6 +44,7 @@ async function lerCorpo(req: IncomingMessage): Promise<unknown> {
 
 export function criarServidor(auth: AuthFabrica, sql: Sql) {
 	const manipuladorAuth = toNodeHandler(auth);
+	let faseAtual: Fase = "elicitacao";
 	const servidor = createServer(async (req, res) => {
 		try {
 			const url = new URL(req.url ?? "/", "http://localhost");
@@ -108,6 +114,61 @@ export function criarServidor(auth: AuthFabrica, sql: Sql) {
 					return;
 				}
 				responder(res, 200, gerarOpenAPI());
+				return;
+			}
+			if (url.pathname === "/fases" && req.method === "GET") {
+				if (!usuarioId) {
+					responder(res, 401, { erro: "sem autenticacao" });
+					return;
+				}
+				responder(
+					res,
+					200,
+					FASES.map((fase) => ({ fase, atual: fase === faseAtual })),
+				);
+				return;
+			}
+			if (url.pathname === "/transicoes" && req.method === "POST") {
+				if (
+					!autorizar({
+						usuarioId,
+						papel,
+						rota: "transicoes",
+						eMembroDoProjeto: true,
+					})
+				) {
+					responder(res, 401, { erro: "sem autenticacao" });
+					return;
+				}
+				const corpo = await lerCorpo(req);
+				const valido = TransicaoEntrada.safeParse(corpo);
+				if (!valido.success) {
+					responder(res, 400, { erro: "payload invalido" });
+					return;
+				}
+				const aprovado =
+					AprovacaoEntrada.safeParse({
+						decisao: valido.data.aprovado ? "aprovar" : "rejeitar",
+						motivo: valido.data.motivo,
+					}).success && valido.data.aprovado;
+				try {
+					const resultado = avancar(faseAtual, valido.data.chave, {
+						artefatoPresente: valido.data.artefatoPresente,
+						aprovado,
+						motivo: valido.data.motivo,
+					});
+					if (
+						typeof resultado.fase === "string" &&
+						resultado.fase !== "concluido"
+					) {
+						faseAtual = resultado.fase;
+					}
+					responder(res, 200, resultado);
+				} catch (erro) {
+					responder(res, 422, {
+						erro: erro instanceof Error ? erro.message : "transicao invalida",
+					});
+				}
 				return;
 			}
 			responder(res, 404, { erro: "nao encontrado" });

@@ -55,6 +55,16 @@ export function gerarOpenAPI(): DocumentoOpenAPI {
 						"400": { description: "Payload invalido ou sem artefato" },
 						"401": { description: "Sem autenticacao" },
 						"403": { description: "Sem autorizacao" },
+						"422": { description: "Transicao bloqueada" },
+					},
+				},
+			},
+			"/fases": {
+				get: {
+					summary: "Listar fases com a atual",
+					responses: {
+						"200": { description: "Fases do pipeline" },
+						"401": { description: "Sem autenticacao" },
 					},
 				},
 			},

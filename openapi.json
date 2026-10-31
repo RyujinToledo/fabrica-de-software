@@ -60,6 +60,22 @@
           },
           "403": {
             "description": "Sem autorizacao"
+          },
+          "422": {
+            "description": "Transicao bloqueada"
+          }
+        }
+      }
+    },
+    "/fases": {
+      "get": {
+        "summary": "Listar fases com a atual",
+        "responses": {
+          "200": {
+            "description": "Fases do pipeline"
+          },
+          "401": {
+            "description": "Sem autenticacao"
           }
         }
       }
