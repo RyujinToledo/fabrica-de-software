@@ -6,7 +6,7 @@ Atualizado a cada task, junto com o commit do código. Nada de documentar só no
 | ----------------------------------------- | ------- | ----------------- | -------------------------------------------------------------------------------------- |
 | TASK-001 fundação pacotes e scripts       | feito   | `f2e7105`         | `pnpm test` 1 verde, `test:e2e` passa, gates verdes                                    |
 | TASK-002 esquema RAG no PostgreSQL        | feito   | `8eb683c` + atual | migration aplica e reaplica idempotente, `rag.test` 4 verdes com Postgres, p50 < 50 ms |
-| TASK-003 máquina de estados mais fila     | a fazer | —                 | —                                                                                      |
+| TASK-003 máquina de estados mais fila     | feito   | atual             | 11 fases, 5 paradas, idempotência e teto de 3 provados em `orquestrador.test`          |
 | TASK-004 API Zod mais OpenAPI             | a fazer | —                 | —                                                                                      |
 | TASK-005 Better Auth com zero-trust       | a fazer | —                 | —                                                                                      |
 | TASK-006 executor worktree mais Docker    | a fazer | —                 | —                                                                                      |
