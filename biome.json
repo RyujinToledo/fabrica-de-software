@@ -6,7 +6,8 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": ["**", "!pnpm-lock.yaml", "!node_modules", "!test-results"]
 	},
 	"formatter": {
 		"enabled": true,

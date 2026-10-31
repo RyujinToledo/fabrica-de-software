@@ -48,3 +48,7 @@ Thumbs.db
 *.sqlite
 *.sqlite3
 *.db
+
+# Resultados de teste locais
+test-results/
+playwright-report/
