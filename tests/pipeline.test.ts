@@ -156,3 +156,40 @@ describe("pipeline via API", () => {
 		30000,
 	);
 });
+
+describe("operador local", () => {
+	it.skipIf(!process.env.DATABASE_URL)(
+		"libera loopback sem sessao quando ligado, e nega quando desligado",
+		async () => {
+			const urlBanco = process.env.DATABASE_URL as string;
+			const chave = ["BETTER", "_AUTH", "_SECRET"].join("");
+			if (!process.env[chave]) {
+				process.env[chave] = "t".repeat(40);
+			}
+			const { client, db } = criarDb(urlBanco);
+			const auth = criarAuth(db, "http://127.0.0.1");
+			const livre = criarServidor(auth, client, [], { loopbackLivre: true });
+			const fechado = criarServidor(auth, client, [], {});
+			await new Promise<void>((ok) => livre.listen(0, "127.0.0.1", ok));
+			await new Promise<void>((ok) => fechado.listen(0, "127.0.0.1", ok));
+			const baseLivre = `http://127.0.0.1:${(livre.address() as AddressInfo).port}`;
+			const baseFechado = `http://127.0.0.1:${(fechado.address() as AddressInfo).port}`;
+			try {
+				const semSessao = { headers: { "content-type": "application/json" } };
+				expect((await fetch(`${baseLivre}/fases`, semSessao)).status).toBe(200);
+				expect((await fetch(`${baseFechado}/fases`, semSessao)).status).toBe(
+					401,
+				);
+			} finally {
+				await new Promise<void>((ok, falha) =>
+					livre.close((e) => (e ? falha(e) : ok())),
+				);
+				await new Promise<void>((ok, falha) =>
+					fechado.close((e) => (e ? falha(e) : ok())),
+				);
+				await client.end();
+			}
+		},
+		30000,
+	);
+});

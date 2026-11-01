@@ -160,54 +160,6 @@ function Cartao({ fase, atual }: Fase) {
 	);
 }
 
-function Login({ aoEntrar }: { aoEntrar: () => void }) {
-	const [email, setEmail] = useState("");
-	const [senha, setSenha] = useState("");
-	const [erro, setErro] = useState("");
-	return (
-		<form
-			className="flex flex-col gap-2"
-			onSubmit={async (e) => {
-				e.preventDefault();
-				setErro("");
-				const res = await fetch(`${API}/api/auth/sign-in/email`, {
-					method: "POST",
-					headers: { "content-type": "application/json" },
-					credentials: "include",
-					body: JSON.stringify({ email, password: senha }),
-				});
-				if (!res.ok) {
-					setErro("Login recusado. Confira email e senha.");
-					return;
-				}
-				aoEntrar();
-			}}
-		>
-			<input
-				value={email}
-				onChange={(e) => setEmail(e.target.value)}
-				placeholder="Email"
-				type="email"
-				className="rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 focus:border-cyan-500"
-			/>
-			<input
-				value={senha}
-				onChange={(e) => setSenha(e.target.value)}
-				placeholder="Senha"
-				type="password"
-				className="rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 focus:border-cyan-500"
-			/>
-			<button
-				type="submit"
-				className="rounded-md bg-cyan-600 px-4 py-2 text-sm text-white transition-colors duration-150 hover:bg-cyan-500"
-			>
-				Entrar
-			</button>
-			{erro && <p className="text-sm text-rose-400">{erro}</p>}
-		</form>
-	);
-}
-
 function Painel() {
 	const [filtro, setFiltro] = useState("");
 	const [aba, setAba] = useState("todos");
@@ -254,12 +206,10 @@ function Painel() {
 					/>
 				</div>
 				{fases.isError && (
-					<div className="mb-4 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
-						<p className="mb-2 text-sm text-amber-400">
-							Sem acesso a API. Entre com sua conta da fabrica.
-						</p>
-						<Login aoEntrar={() => fases.refetch()} />
-					</div>
+					<p className="text-sm text-amber-400">
+						A API nao liberou acesso. Confira se o servidor subiu com
+						OPERADOR_LOCAL=1.
+					</p>
 				)}
 				<div className="grid gap-4 md:grid-cols-2">
 					{visiveis.map((f) => (

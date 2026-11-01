@@ -15,6 +15,7 @@ const origens = (process.env.ORIGENS_CONFIADAS ?? "")
 	.split(",")
 	.map((o) => o.trim())
 	.filter(Boolean);
+const loopbackLivre = process.env.OPERADOR_LOCAL === "1";
 
 if (!url) {
 	console.error("[servir-api] faltou DATABASE_URL no ambiente.");
@@ -27,7 +28,7 @@ if (!process.env[chaveSegredo]) {
 
 const { client, db } = criarDb(url);
 const auth = criarAuth(db, `http://127.0.0.1:${porta}`, origens);
-const servidor = criarServidor(auth, client, origens);
+const servidor = criarServidor(auth, client, origens, { loopbackLivre });
 servidor.listen(porta, "127.0.0.1", () => {
 	console.log(`[servir-api] em http://127.0.0.1:${porta}`);
 });

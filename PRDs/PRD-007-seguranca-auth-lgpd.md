@@ -13,6 +13,9 @@ Nenhum segredo vaza, nenhuma rota abre sem autorização explícita e nenhum dad
 ## Personas
 
 - Operador: usa a fabrica sozinho, com acesso ao Swagger e a operacao sensivel.
+- Modo operador local: com `OPERADOR_LOCAL=1`, o servidor confia em loopback
+  (127.0.0.1, ::1) e libera sem sessao. Fora de loopback, a sessao continua
+  obrigatoria. Padrao desligado; ligue so no `.env` local, nunca em rede.
 - Usuário titular de dados: aceita termos, pede exportação ou exclusão.
 - Desenvolvedor da fábrica: recebe erro claro quando viola gate, sem ver valor de segredo.
 

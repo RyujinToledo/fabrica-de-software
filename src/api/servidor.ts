@@ -47,6 +47,7 @@ export function criarServidor(
 	auth: AuthFabrica,
 	sql: Sql,
 	origensConfiadas: string[] = [],
+	opcoes: { loopbackLivre?: boolean } = {},
 ) {
 	const manipuladorAuth = toNodeHandler(auth);
 	const permitidas = new Set([
@@ -95,7 +96,15 @@ export function criarServidor(
 			const sessao = await auth.api.getSession({
 				headers: fromNodeHeaders(req.headers),
 			});
-			const usuarioId = sessao?.user?.id ?? null;
+			const remoto = req.socket.remoteAddress ?? "";
+			const ehLoopback =
+				opcoes.loopbackLivre === true &&
+				(remoto === "127.0.0.1" ||
+					remoto === "::1" ||
+					remoto === "::ffff:127.0.0.1");
+			const usuarioId = ehLoopback
+				? "operador-local"
+				: (sessao?.user?.id ?? null);
 			const negar = (
 				rota: "projetos" | "transicoes" | "docs" | "logs" | "fases",
 			) => {
