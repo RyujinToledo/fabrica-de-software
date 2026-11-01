@@ -115,7 +115,7 @@ A Fabrica de Software e uma ferramenta **interna** que transforma demandas em li
 | 1    | Elicitacao               | Conversa no chat           | Demanda.md          | Sim                 |
 | 2    | Painel de Especialistas  | Demanda.md                 | Requisitos.md       | Nao                 |
 | 3    | Choque de Realidade      | Demanda.md + Requisitos.md | Decisoes.md         | Sim                 |
-| 4    | Consultoria de Design    | Requisitos + Decisoes      | Design-System.md    | Sim                 |
+| 4    | Consultoria de Design    | Requisitos + Decisoes      | DESIGN.md           | Sim                 |
 | 5    | Consolidacao e Coerencia | Todos os docs              | Especificacao.md    | Nao (agente audita) |
 | 6    | Decomposicao Tecnica     | Especificacao.md           | PRDs/ + ADRs/       | Nao                 |
 | 7    | Geracao de Tasks         | PRDs + ADRs                | Tasks/              | Nao                 |

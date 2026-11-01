@@ -15,6 +15,6 @@ React com Vite, TanStack Router e Query, Tailwind CSS com a paleta e tipografia 
 
 ## Consequências
 
-- Componentes seguem `docs/Design-System.md` sem desvio.
+- Componentes seguem `DESIGN.md` sem desvio.
 - Geist Sans na interface com `tabular-nums`; JetBrains Mono em logs e código.
 - Sidebar colapsa abaixo de 768 px; cards empilham.

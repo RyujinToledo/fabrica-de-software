@@ -12,7 +12,8 @@
 			"!pnpm-lock.yaml",
 			"!node_modules",
 			"!test-results",
-			"!openapi.json"
+			"!openapi.json",
+			"!DESIGN.md"
 		]
 	},
 	"formatter": {
