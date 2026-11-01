@@ -33,7 +33,9 @@ Sair da conversa com três artefatos íntegros: `Demanda.md` fiel ao usuário, d
 
 1. Agente de design propõe 3 opções estruturalmente diferentes com paleta Tailwind e tipografia.
 2. Mock interativo permite alternar entre as 3 antes de escolher.
-3. Escolha do usuário entra na Especificação final. Sem escolha, não avança.
+3. Aprovada uma opção, o entregável é um DESIGN.md no formato google-labs-code/design.md,
+   gerado por `gerarDesignMd` e conferido por `validarDesignMd` (`src/agentes/design.ts`).
+4. Escolha do usuário entra na Especificação final. Sem escolha, não avança.
 
 ### Coerência (Fase 5)
 

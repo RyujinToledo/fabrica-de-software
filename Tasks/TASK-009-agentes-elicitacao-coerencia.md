@@ -22,8 +22,10 @@ TASK-002 (RAG) e TASK-003 (orquestrador).
 1. Implementar entrevistador que grava `Demanda.md` fiel ao usuário e pede confirmação.
 2. Implementar agente neutro do choque sem skill, que gera dilemas A ou B a partir de Demanda e Requisitos.
 3. Implementar agente de design que propõe 3 opções com mock alternável e registra a escolha.
-4. Implementar agente de coerência que audita a Especificação e lista contradição com referência.
-5. Registrar decisões no RAG com timestamp.
+4. Gerar o DESIGN.md do pedido no formato google-labs-code/design.md e validar
+   estrutura e referências antes de entregar.
+5. Implementar agente de coerência que audita a Especificação e lista contradição com referência.
+6. Registrar decisões no RAG com timestamp.
 
 ## O que não fazer
 

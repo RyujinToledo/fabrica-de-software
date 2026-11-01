@@ -108,3 +108,43 @@ describe("decisao no RAG", () => {
 		30000,
 	);
 });
+
+describe("DESIGN.md do pedido", () => {
+	const base = {
+		nome: "Loja Simples",
+		descricao: "Vitrine da loja em tons sobrios.",
+		cores: { fundo: "#111111", tinta: "#eeeeee" },
+		tipografia: { texto: { fontFamily: "Arial", fontSize: "14px" } },
+		arredondamento: { controle: "6px" },
+		espacamento: { cartao: "16px" },
+		componentes: {
+			"botao-primario": {
+				backgroundColor: "{colors.fundo}",
+				textColor: "{colors.tinta}",
+			},
+		},
+	};
+
+	it("gera arquivo valido no formato google", async () => {
+		const { gerarDesignMd, validarDesignMd } = await import(
+			"../src/agentes/design.ts"
+		);
+		const md = gerarDesignMd(base);
+		expect(md.startsWith("---\n")).toBe(true);
+		expect(md).toContain("## Do's and Don'ts");
+		expect(validarDesignMd(md)).toEqual([]);
+	});
+
+	it("barra referencia quebrada e secao fora de ordem", async () => {
+		const { gerarDesignMd, validarDesignMd } = await import(
+			"../src/agentes/design.ts"
+		);
+		const md = gerarDesignMd({
+			...base,
+			componentes: { "botao-x": { backgroundColor: "{colors.fantasma}" } },
+		});
+		expect(validarDesignMd(md).join(";")).toContain("referencia sem token");
+		const foraDeOrdem = `${md.split("## Colors")[0]}## Colors\n\nx\n\n${md.split("## Colors")[1]}`;
+		expect(validarDesignMd(foraDeOrdem).length).toBeGreaterThan(0);
+	});
+});
