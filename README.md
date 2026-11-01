@@ -163,7 +163,7 @@ Documentos fonte:
 - [docs/Especificacao.md](docs/Especificacao.md)
 - [docs/Requisitos.md](docs/Requisitos.md)
 - [docs/ARQUITETURA-PROCESSO.md](docs/ARQUITETURA-PROCESSO.md)
-- [PRDs/](PRDs/), [ADRs/](ADRs/), [Tasks/](Tasks/), [Tasks/STATUS.md](Tasks/STATUS.md)
+- [PRDs/](docs/PRDs/), [ADRs/](docs/ADRs/), [Tasks/](Tasks/), [Tasks/STATUS.md](Tasks/STATUS.md)
 - Contrato da API em [openapi.json](openapi.json)
 
 Rodar local:

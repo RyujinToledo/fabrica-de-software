@@ -1,6 +1,6 @@
 # Tasks — Fábrica de Software
 
-Backlog executável da Fase 7, derivado dos `PRDs/` e `ADRs/`. Cada task roda isolada em worktree e container descartável (máximo 3 simultâneas).
+Backlog executável da Fase 7, derivado dos `docs/PRDs/` e `docs/ADRs/`. Cada task roda isolada em worktree e container descartável (máximo 3 simultâneas).
 
 | Task     | Título                                  | PRD              | Depende de         |
 | -------- | --------------------------------------- | ---------------- | ------------------ |
