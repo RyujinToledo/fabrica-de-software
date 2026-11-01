@@ -4,7 +4,7 @@
 
 Interface web da fábrica. Estilo Canvas de Observabilidade, paleta Slate e Cyan.
 
-Cobre RF-005 e o Design-System aprovado.
+Cobre RF-005 e o DESIGN.md aprovado.
 
 ## Objetivo
 
@@ -34,7 +34,7 @@ Mostrar em tempo real onde o pipeline está e pedir decisão humana só quando t
 
 - Paleta exata: `bg-slate-950`, `bg-slate-900`, `bg-slate-800`, `border-slate-700`, `cyan-500` e `cyan-400` para ação, `sky-400` secundário, `teal-400` sucesso, `amber-400` aviso, `rose-400` erro.
 - Tipografia: Geist Sans com `tabular-nums` na interface; JetBrains Mono em código e logs.
-- Componentes padrão do Design-System: cards `bg-slate-900 rounded-lg p-4`, botões primário `bg-cyan-600`, secundário `bg-slate-700`, destrutivo `bg-rose-600`, inputs `bg-slate-800`.
+- Componentes padrão do DESIGN.md: cards `bg-slate-900 rounded-lg p-4`, botões primário `bg-cyan-600`, secundário `bg-slate-700`, destrutivo `bg-rose-600`, inputs `bg-slate-800`.
 - Badges: pendente, em progresso, concluído, bloqueado, erro.
 - Responsivo: sidebar colapsa abaixo de 768 px; cards empilham.
 - Frontend é vitrine: nenhuma autorização ou regra crítica só no cliente. Backend revalida tudo.

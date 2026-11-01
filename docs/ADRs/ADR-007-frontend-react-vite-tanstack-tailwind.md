@@ -6,7 +6,7 @@ Painel Canvas de Observabilidade precisa de densidade alta, tempo real e design 
 
 ## Decisão
 
-React com Vite, TanStack Router e Query, Tailwind CSS com a paleta e tipografia do Design-System.
+React com Vite, TanStack Router e Query, Tailwind CSS com a paleta e tipografia do DESIGN.md.
 
 ## Alternativas descartadas
 

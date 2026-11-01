@@ -6,7 +6,7 @@ Sem visibilidade, ninguém sabe onde a esteira travou (PRD-004).
 
 ## Objetivo
 
-Entregar sidebar, flow cards das 11 fases e painel de logs com filtro, seguindo o Design-System à risca.
+Entregar sidebar, flow cards das 11 fases e painel de logs com filtro, seguindo o DESIGN.md à risca.
 
 ## PRDs e ADRs vinculados
 

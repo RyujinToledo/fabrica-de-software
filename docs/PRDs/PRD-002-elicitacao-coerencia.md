@@ -46,7 +46,7 @@ Sair da conversa com três artefatos íntegros: `Demanda.md` fiel ao usuário, d
 
 - `Demanda.md` preserva texto original, inclusive erro de português.
 - Painel de especialistas registra ângulos: legislação, impostos, segurança, mercado, concorrentes, alternativas.
-- Mocks seguem Design-System aprovado: Canvas de Observabilidade, Slate e Cyan, Geist Sans mais JetBrains Mono.
+- Mocks seguem o DESIGN.md aprovado: Canvas de Observabilidade, Slate e Cyan, Geist Sans mais JetBrains Mono.
 - Tudo em português do Brasil.
 - Prompts isolados em delimitadores, ferramentas limitadas por papel (RF-023).
 
