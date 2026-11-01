@@ -14,5 +14,7 @@ Decisões técnicas vinculadas aos PRDs, restritas à stack aprovada na Especifi
 | ADR-008 | Vitest no loop, Playwright no gate final | PRD-003               |
 | ADR-009 | OpenAI API com OpenRouter no dia zero    | PRD-002               |
 | ADR-010 | Drizzle com migrations em SQL puro       | PRD-005, PRD-006      |
+| ADR-011 | Formato DESIGN.md para design system     | PRD-002, PRD-004      |
+| ADR-012 | Operador único com loopback livre        | PRD-004, PRD-007      |
 
 Formato de cada ADR: contexto, decisão, alternativas descartadas, consequências.

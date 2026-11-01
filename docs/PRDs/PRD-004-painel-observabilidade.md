@@ -50,3 +50,5 @@ Mostrar em tempo real onde o pipeline está e pedir decisão humana só quando t
 - [ ] Ação humana aprovável e rejeitável pelo painel com registro.
 - [ ] Contraste mínimo WCAG AA.
 - [ ] Layout confere com `docs/mocks/design-comparison.html`.
+- [ ] Sem tela de login no uso local: com `OPERADOR_LOCAL=1`, o painel abre
+  direto (ADR-012). Tokens e layout seguem o `DESIGN.md` (ADR-011).
