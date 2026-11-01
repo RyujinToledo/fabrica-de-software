@@ -147,8 +147,8 @@ Pipeline determinístico em 11 fases. Orquestração com BullMQ e Valkey. RAG es
 | :------------------ | :---------------------------------------------------- |
 | Linguagem e runtime | TypeScript, Node.js LTS 22+                           |
 | Frontend            | React, Vite, TanStack Router/Query, Tailwind CSS      |
-| Backend e contrato  | Node.js, Zod, OpenAPI 3.x, Swagger só para admin      |
-| Auth                | Better Auth com sessões, 2FA e RBAC                   |
+| Backend e contrato  | Node.js, Zod, OpenAPI 3.x, Swagger só para operador   |
+| Auth                | Better Auth com sessões e 2FA, operador único         |
 | Banco e ORM         | PostgreSQL, Drizzle ORM                               |
 | Fila e cache        | Valkey, BullMQ                                        |
 | Testes              | Playwright para E2E, Vitest para unidade e integração |
@@ -175,6 +175,23 @@ pnpm install
 pnpm lint && pnpm typecheck
 pnpm test
 ```
+
+Subir a fábrica local (painel + API + banco):
+
+```bash
+docker run -d --name fabrica-local -e POSTGRES_USER=app -e POSTGRES_PASSWORD=app \
+  -e POSTGRES_DB=fabrica -p 127.0.0.1:5432:5432 -v fabrica-dados:/var/lib/postgresql/data \
+  postgres:16
+cp .env.example .env
+# edite o .env: DATABASE_URL, BETTER_AUTH_SECRET longo e OPERADOR_LOCAL=1
+pnpm db:migrate
+node --experimental-strip-types scripts/servir-api.ts
+# em outro terminal:
+VITE_API_URL=http://127.0.0.1:3000 pnpm --filter @fabrica/painel build
+pnpm --filter @fabrica/painel preview -- --port 4173
+```
+
+Com `OPERADOR_LOCAL=1`, o uso via loopback dispensa login. Fora de loopback, a sessão continua obrigatória. Nunca ligue isso em rede.
 
 Regras do projeto em [AGENTS.md](AGENTS.md). Commits no padrão Conventional Commits. Sem segredo no repo, o Gitleaks barra no pre-commit e no CI.
 
