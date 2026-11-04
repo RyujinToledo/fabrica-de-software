@@ -5,6 +5,10 @@
 [![CI & Quality Gates](https://github.com/RyujinToledo/fabrica-de-software/actions/workflows/ci.yml/badge.svg)](https://github.com/RyujinToledo/fabrica-de-software/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[![Atividade](https://img.shields.io/github/last-commit/RyujinToledo/fabrica-de-software?label=atividade)](https://github.com/RyujinToledo/fabrica-de-software/pulse)
+[![Stars](https://img.shields.io/github/stars/RyujinToledo/fabrica-de-software?label=stars)](https://github.com/RyujinToledo/fabrica-de-software/stargazers)
+[![Contribuidores](https://img.shields.io/github/contributors/RyujinToledo/fabrica-de-software?label=contribuidores)](https://github.com/RyujinToledo/fabrica-de-software/graphs/contributors)
+
 A **Fábrica de Software Autônoma** transforma uma ideia em português em um sistema funcionando de verdade. Com teste, segurança e endereço na internet. Você não precisa saber programar. Você não precisa colar código da IA e torcer para funcionar.
 
 Se você hoje faz "vibe coding", copia e cola resposta de chat e vive apagando incêndio, aqui o jogo muda. Você passa a ser o cliente. Você pede, acompanha e aprova. A fábrica executa.
