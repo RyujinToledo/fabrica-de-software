@@ -203,11 +203,11 @@ Resumo da proteção: validação na entrada, permissão negada por padrão, seg
 
 ## Como contribuir
 
-1. Abra uma issue em português explicando o problema com exemplo real.
-2. Faça fork e crie uma branch curta a partir da `main`.
-3. Use Conventional Commits. Exemplo: `fix(painel): corrige texto do botão de aprovar`.
-4. Antes do PR, rode `pnpm lint`, `pnpm typecheck`, `pnpm test` e `pnpm security:scan`.
-5. Abra um PR pequeno, com contexto e print quando ajudar.
+Abra uma issue primeiro, faça fork e envie um PR pequeno.
+
+- Passo a passo, gates e checklist: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Falha de segurança: [SECURITY.md](SECURITY.md)
+- Licença: [LICENSE](LICENSE)
 
 ## Licença
 
