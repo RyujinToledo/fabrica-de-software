@@ -38,7 +38,7 @@
 		"@opentelemetry/api": "^1.10.0",
 		"@opentelemetry/sdk-trace-base": "^2.12.0",
 		"better-auth": "^1.7.14",
-		"bullmq": "^6.5.2",
+		"bullmq": "^6.5.3",
 		"drizzle-orm": "^0.45.4",
 		"ioredis": "^6.0.0",
 		"postgres": "^4.0.0",
