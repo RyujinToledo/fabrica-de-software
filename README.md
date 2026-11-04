@@ -13,6 +13,8 @@ A **Fábrica de Software Autônoma** transforma uma ideia em português em um si
 
 Se você hoje faz "vibe coding", copia e cola resposta de chat e vive apagando incêndio, aqui o jogo muda. Você passa a ser o cliente. Você pede, acompanha e aprova. A fábrica executa.
 
+A fábrica roda na sua máquina ou no seu servidor. O Git guarda versão, histórico e as worktrees da execução, e isso é local. O GitHub é só onde este código-fonte está publicado. Nada do que roda em produção depende dele.
+
 - Quer pedir um software? Vá direto para [Como pedir um software](#como-pedir-um-software).
 - Quer ver como a ideia vira produto? Veja [Como funciona](#como-funciona).
 - É da área técnica? Pule para [Para quem é dev](#para-quem-é-dev).
@@ -96,20 +98,22 @@ Por dentro, esse caminho tem 11 fases com 5 paradas para você decidir. Entrevis
 - Banco de dados organizado com cópia e regra de privacidade.
 - Proteção contra invasão comum na entrada do site.
 - Documentação simples do que foi entregue.
-- Repositório Git completo. Sem lock-in. Sem mensalidade para a fábrica, o código é seu sob licença MIT.
+- Repositório Git completo, com histórico e sem lock-in. Pode ficar no GitHub, no GitLab ou no seu servidor. Sem mensalidade para a fábrica, o código é seu sob licença MIT.
 
 ## Como pedir um software
 
-Hoje o pedido entra como uma issue no GitHub. Em breve vai ter um chat guiado dentro do painel.
+O pedido entra no painel da fábrica. O GitHub não participa do pedido nem da execução.
 
-1. Abra a aba [Issues](https://github.com/RyujinToledo/fabrica-de-software/issues) do repositório.
-2. Clique em **New issue** e escolha **Pedir um software**.
-3. Responda em português simples:
+1. Suba a fábrica na sua máquina ou servidor. As instruções estão em [Para quem é dev](#para-quem-é-dev).
+2. Abra o painel no navegador.
+3. Descreva a ideia em português simples:
    - O que você quer resolver?
    - Quem vai usar?
    - O que o sistema precisa fazer? Liste com suas palavras.
    - O que ele não precisa fazer agora?
-4. Envie. A fábrica responde com perguntas e depois com a proposta de telas.
+4. A fábrica segue com as perguntas que faltarem e depois com a proposta de telas. Você acompanha as fases, os logs e as aprovações no mesmo painel.
+
+A conversa guiada de entrada ainda está em construção. Até ela ficar pronta, o pedido é registrado pela API local, em `POST /projetos`, com nome e descrição. O resto da esteira já roda.
 
 Dica que ajuda muito. Escreva um exemplo real de uso. "Maria agenda corte terça 14h e recebe lembrete no dia". Isso vale mais que termo técnico.
 
@@ -117,14 +121,14 @@ Dica que ajuda muito. Escreva um exemplo real de uso. "Maria agenda corte terça
 
 Nada. Zero.
 
-Você não precisa saber o que é banco de dados, API, deploy ou teste. Se aparecer uma palavra estranha no painel, abra uma issue perguntando. A obrigação de explicar é nossa.
+Você não precisa saber o que é banco de dados, API, deploy ou teste. Se aparecer uma palavra estranha no painel, pergunte. A obrigação de explicar é nossa.
 
 Se você é curioso e quer aprender, os documentos em [docs/](docs/) explicam cada fase. Mas aprender é opcional.
 
 ## Perguntas comuns
 
 **Preciso instalar alguma coisa?**
-Não. Para pedir, só precisa do navegador e de conta no GitHub. Para usar o sistema pronto, só do link.
+A fábrica precisa rodar na sua máquina ou em um servidor. Para pedir e acompanhar, só o navegador. Conta no GitHub não é necessária. Para usar o sistema pronto, só o link.
 
 **E se eu não gostar do visual?**
 Você escolhe entre opções de tela antes de construir. Nada vai para frente sem seu ok.
@@ -145,7 +149,7 @@ Não. Isso muda seu papel. Em vez de tentar ser programador por uma tarde, você
 
 Resumo rápido para você avaliar em 2 minutos.
 
-Pipeline determinístico em 11 fases. Orquestração com BullMQ e Valkey. RAG estruturado no PostgreSQL com busca textual em português. Execução em até 3 git worktrees com containers Docker descartáveis sem root. TDD com Vitest no loop rápido e Playwright como gate final. Contrato OpenAPI 3.x derivado de schemas Zod. Auth com Better Auth, 2FA e política default-deny. Deploy com NGINX, Coraza WAF, fail2ban, Node.js, Valkey e PostgreSQL com Drizzle.
+Pipeline determinístico em 11 fases. Orquestração com BullMQ e Valkey. RAG estruturado no PostgreSQL com busca textual em português. Execução em até 3 git worktrees, que são do git local, com containers Docker descartáveis sem root. TDD com Vitest no loop rápido e Playwright como gate final. Contrato OpenAPI 3.x derivado de schemas Zod. Auth com Better Auth, 2FA e política default-deny. Deploy com NGINX, Coraza WAF, fail2ban, Node.js, Valkey e PostgreSQL com Drizzle. O GitHub só hospeda este código e roda o CI do repositório; não é runtime nem banco.
 
 | Camada              | Tecnologia                                            |
 | :------------------ | :---------------------------------------------------- |
@@ -173,12 +177,14 @@ Documentos fonte:
 Rodar local:
 
 ```bash
-git clone https://github.com/RyujinToledo/fabrica-de-software.git
+git clone <url-do-repositorio> fabrica-de-software
 cd fabrica-de-software
 pnpm install
 pnpm lint && pnpm typecheck
 pnpm test
 ```
+
+A URL pode ser deste repositório no GitHub ou de qualquer espelho em GitLab, servidor próprio ou pasta local. O clone não cria dependência com o GitHub.
 
 Subir a fábrica local (painel + API + banco):
 
@@ -197,7 +203,7 @@ pnpm --filter @fabrica/painel preview -- --port 4173
 
 Com `OPERADOR_LOCAL=1`, o uso via loopback dispensa login. Fora de loopback, a sessão continua obrigatória. Nunca ligue isso em rede.
 
-Regras do projeto em [AGENTS.md](AGENTS.md). Commits no padrão Conventional Commits. Sem segredo no repo, o Gitleaks barra no pre-commit e no CI.
+Regras do projeto em [AGENTS.md](AGENTS.md). Commits no padrão Conventional Commits. Sem segredo no repo, o Gitleaks barra no pre-commit e no CI do repositório. Esse CI é só qualidade do código; a fábrica em execução não fala com o GitHub.
 
 ## Segurança
 
