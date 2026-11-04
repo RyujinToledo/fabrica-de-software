@@ -37,7 +37,7 @@
 	"dependencies": {
 		"@opentelemetry/api": "^1.10.0",
 		"@opentelemetry/sdk-trace-base": "^2.12.0",
-		"better-auth": "^1.7.14",
+		"better-auth": "^1.7.15",
 		"bullmq": "^6.5.2",
 		"drizzle-orm": "^0.45.4",
 		"ioredis": "^6.0.0",
